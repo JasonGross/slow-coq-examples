@@ -260,7 +260,7 @@ Ltac solve_disjoint_side_conditions :=
        cbv beta iota zeta delta [Carriers.default_to_production Lookup_idx fst snd List.map pregrammar_productions List.length List.nth minus Operations.List.drop];
        try reflexivity
   | [ |- is_true (Operations.List.disjoint _ _ _) ]
-    => vm_compute; try reflexivity
+    => my_vm_compute; try reflexivity
   end.
 
 Ltac pose_disjoint_rev_search_for lem :=
@@ -270,7 +270,7 @@ Ltac pose_disjoint_rev_search_for lem :=
   let HSL := match goal with |- appcontext[@ParserInterface.split_list_is_complete_idx ?Char ?G ?HSLM ?HSL] => HSL end in
   let lem' := constr:(@refine_disjoint_rev_search_for_idx HSLM HSL _ _ _ G) in
   let H' := fresh in
-  assert (H' : ValidReflective.grammar_rvalid G) by (vm_compute; reflexivity);
+  assert (H' : ValidReflective.grammar_rvalid G) by (my_vm_compute; reflexivity);
   let lem' := match goal with
               | [ |- appcontext[ParserInterface.split_list_is_complete_idx ?G ?str ?offset ?len ?idx] ]
                 => constr:(fun idx' nt its => lem' str offset len nt its idx' H')

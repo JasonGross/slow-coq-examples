@@ -316,7 +316,7 @@ Ltac solve_disjoint_side_conditions :=
        cbv beta iota zeta delta [Carriers.default_to_production Lookup_idx fst snd List.map pregrammar_productions List.length List.nth minus Operations.List.drop];
        try reflexivity
   | [ |- is_true (Operations.List.disjoint _ _ _) ]
-    => vm_compute; try reflexivity
+    => my_vm_compute; try reflexivity
   end.
 
 Ltac pose_disjoint_search_for lem :=

@@ -7,6 +7,17 @@ Require Import Fiat.Parsers.ExtrOcamlParsers. (* for simpl rules for [find_first
 Require Import Fiat.Parsers.Refinement.BinOpBrackets.BinOpRules.
 Require Import Fiat.Parsers.StringLike.String.
 
+(** Uncomment this to test native compute *)
+(*
+Ltac my_eval_vm_compute_in c ::=
+  eval native_compute in c.
+
+Ltac my_vm_cast_no_check c ::=
+  native_cast_no_check c.
+
+Ltac my_vm_compute ::= native_compute.
+*)
+
 Section IndexedImpl.
   (*Context {HSLM : StringLikeMin Ascii.ascii}
           {HSL : StringLike Ascii.ascii}

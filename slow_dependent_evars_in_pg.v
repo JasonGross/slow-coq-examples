@@ -1,4 +1,8 @@
 (* -*- coq-end-goals-regexp-show-subgoals: nil -*- *)
+(** The above variable setting is required to make this example work.
+    It is a kludge to work around the fact that, by default, things
+    that you [idtac] or [Time] in Coq 8.4 don't show up in the *goals*
+    nor *response* buffers in Coq 8.4 *)
 
 Goal True. do 5000 (evar (x : Set); clear x).
 

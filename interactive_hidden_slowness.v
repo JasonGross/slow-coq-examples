@@ -22,6 +22,22 @@ Goal True.
   Time idtac. (* 3.7 s in 8.4; still slow (about 1.5 s) in 8.5, but not displayed with [Time] *)
   Time idtac.
   Time idtac.
-  Set Silent. Time idtac. (* 0.084 s in 8.4, which is still slow, but not insanely slow *)
-  Set Silent. Time idtac.
-  Set Silent. Time idtac.
+  Set Silent. Time idtac. Set Silent. (* 0.084 s in 8.4, which is still slow, but not insanely slow *)
+  Set Silent. Time idtac. Set Silent.
+  Set Silent. Time idtac. Set Silent.
+Abort.
+
+
+Goal True.
+  Time idtac. (* 0.0s *)
+  let x := constr:(do2 19 x) in
+  let x := (eval vm_compute in x) in
+  pose (@nhidden _ x).
+  Unset Silent.
+  Time idtac. (* 1.0 s in 8.4; still slow (about 0.5 s) in 8.5, but not displayed with [Time] *)
+  Time idtac.
+  Time idtac.
+  Set Silent. Time idtac. Set Silent. (* 0.084 s in 8.4, which is still slow, but not insanely slow *)
+  Set Silent. Time idtac. Set Silent.
+  Set Silent. Time idtac. Set Silent.
+Abort.

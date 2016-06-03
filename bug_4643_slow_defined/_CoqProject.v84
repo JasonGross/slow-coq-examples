@@ -68,6 +68,7 @@
 ./src/Parsers/Refinement/BinOpBrackets/ParenBalancedGrammar.v
 ./src/Parsers/Refinement/BinOpBrackets/ParenBalancedLemmas.v
 ./src/Parsers/Refinement/DisjointLemmas.v
+./src/Parsers/Refinement/SlowEndSection.v
 ./src/Parsers/Refinement/Tactics.v
 ./src/Parsers/Refinement/SharpenedJSONDebug.v
 ./src/Parsers/Refinement/ReductionTactics.v

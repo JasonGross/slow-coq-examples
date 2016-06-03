@@ -464,10 +464,13 @@ Section IndexedImpl_opt.
                => apply (f_equal3 (fun (b : bool) A B => if b then A else B))
              | [ |- match ?v with nil => _ | cons x xs => _ end = _ :> ?P ]
                => let T := type of v in
+                  let v' := fresh in
+                  evar (v' : T);
                   let A := match (eval hnf in T) with list ?A => A end in
                   refine (@ListMorphisms.list_caset_Proper' A P _ _ _ _ _ _ _ _ _
-                          : _ = match _ with nil => _ | cons x xs => _ end);
-                    [ | intros ?? | ]
+                          : _ = match v' with nil => _ | cons x xs => _ end);
+                  subst v';
+                  [ | intros ?? | ]
              | [ |- @opt2.fold_right ?A ?B _ _ _ = _ ]
                => refine (((_ : Proper (pointwise_relation _ _ ==> _ ==> _ ==> eq) (@List.fold_right A B)) : Proper _ (@opt2.fold_right A B)) _ _ _ _ _ _ _ _ _);
                     [ intros ?? | | ]

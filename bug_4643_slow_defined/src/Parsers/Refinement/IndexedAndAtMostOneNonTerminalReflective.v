@@ -678,9 +678,10 @@ Section IndexedImpl.
     eapply Iterate_Ensemble_BoundedIndex_equiv;
     try apply string_dec;
     simpl; intros; repeat split;
-    try solve [ intuition; intros; try simplify with monad laws;
+      [ solve [ intuition; intros; try simplify with monad laws;
                 repeat intro; computes_to_inv; subst; simpl;
-                fin ].
+                fin ]..
+      | ].
     intros; subst.
     setoid_rewrite refineEquiv_pick_eq'.
     simplify with monad laws.

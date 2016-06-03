@@ -1164,8 +1164,9 @@ Section recursive_descent_parser.
           unfold production_rvalid in Hvalid'''.
           t_prereduce_list_evar.
           t_postreduce_list_with_hyp_with_assumption;
-          [ reflexivity
-            | simpl rewrite production_tl_correct;
+            [ reflexivity
+            | let lem := constr:(production_tl_correct) in
+              simpl rewrite lem;
               match goal with
               | [ H : _::_ = ?y |- context[tl ?y] ] => generalize dependent y; intros; subst
               end;

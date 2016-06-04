@@ -6,16 +6,17 @@ My experience with slowness is that slowness is most often caused by
 Coq doing work it doesn't need to do.  Usually, this work comes in the
 form of retypechecking terms it shouldn't need to retypecheck, and
 occasionally it comes in the form of (re)doing typeclass search that
-can be known to be useless.
+can be known to be useless.  I don't want to have to micro-optimize my
+tactic scripts to get 1000x speed-ups.
 
 ## Specifics
 
 Some examples of Coq being really slow:
 
-- [Bug #4636](https://coq.inria.fr/bugs/show_bug.cgi?id=4636) - `set
-  (x := y)` can be 100x slower than `pose y as x; change y with x` -
-  see [`slow_set.v`](./slow_set.v).  (The reverse can also happen,
-  where `change` is orders of magnitude slower than `set`.  See, e.g., te )
+- [Bug #3441](https://coq.inria.fr/bugs/show_bug.cgi?id=3441) - `pose
+  proof H as k` is sometimes an order of magnitude slower than `pose H
+  as k; clearbody k` - see [`slow_pose_proof.v`](./slow_pose_proof.v)
+  for an example of a 4x slowdown.
 
 - [Bug #3280](https://coq.inria.fr/bugs/show_bug.cgi?id=3280) `match
   goal with |- ?f ?x = ?g ?y => idtac end` can be arbitrarily slow -
@@ -25,11 +26,6 @@ Some examples of Coq being really slow:
   [`evar-normalization-slowness/exercise-tactics/exercise-tactics.sh`](./evar-normalization-slowness/exercise-tactics/exercise-tactics.sh).
   Also, see this [graph of the time of tactics vs the size of
   goal](./evar-normalization-slowness/graph.svg)
-
-- [Bug #3441](https://coq.inria.fr/bugs/show_bug.cgi?id=3441) - `pose
-  proof H as k` is sometimes an order of magnitude slower than `pose H
-  as k; clearbody k` - see [`slow_pose_proof.v`](./slow_pose_proof.v)
-  for an example of a 4x slowdown.
 
 - [Bug #4776](https://coq.inria.fr/bugs/show_bug.cgi?id=4776) - there
   should be a way to terminate typeclass resolution early - see
@@ -43,13 +39,22 @@ Some examples of Coq being really slow:
   make sure to let it set `coq-end-goals-regexp-show-subgoals` to
   `nil` appropriately.
 
+- [Bug #4636](https://coq.inria.fr/bugs/show_bug.cgi?id=4636) - `set
+  (x := y)` can be 100x slower than `pose y as x; change y with x` -
+  see [`slow_set.v`](./slow_set.v).  (The reverse can also happen,
+  where `change` is orders of magnitude slower than `set`.  See, [bug
+  #4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779) in the next
+  bullet.)
+
 - Bugs [#4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643)
-  [#4640](https://coq.inria.fr/bugs/show_bug.cgi?id=4640), and
-  [#4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642): `Defined.`
+  [#4640](https://coq.inria.fr/bugs/show_bug.cgi?id=4640),
+  [#4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642), and
+  [#4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779): `Defined.`
   sometimes takes 2 minutes; `End Section` can take 30 seconds, even
   though there are no section variables, no tactics, no notations, no
-  `Let`s, and only one or two `Definition`s; and `cbv [some
-  identifiers]` can run through 64 GB of RAM in 15 minutes;
+  `Let`s, and only one or two `Definition`s; `cbv [some identifiers]`
+  can run through 64 GB of RAM in 15 minutes; and `pose y as x; change
+  y with x in H` can be 1300x slower than `set (x := y) in H`;
   respectively.  See
   [`slow_fiat_examples/README.md`](./slow_fiat_examples/README.md) for
   more details and instructions on running.  (Be warned, some of the

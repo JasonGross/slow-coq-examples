@@ -64,6 +64,9 @@ The relevant issues are:
 - `pose y as x; change y with x in H` can take 1300x longer than `set
   (x := y) in H`.  See `Time refine_binop_table.` in
   [`src/Parsers/Refinement/SharpenedExpressionPlusParen.v`](./src/Parsers/Refinement/SharpenedExpressionPlusParen.v).
+  If we made the same replacement in `SharpenedJSON`, `change` blows
+  through 64 GB of RAM before crashing Coq, in about 10-20 minutes.
+  (By contrast, `set` takes 0.2 s.)
 
 For convenience, the log of times in `SharpenedJSON`:
 

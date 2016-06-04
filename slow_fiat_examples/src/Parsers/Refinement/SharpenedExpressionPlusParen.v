@@ -65,9 +65,9 @@ total time:      0.712s
  ├─eapply (refine_opt2_fold_right r_o re  26.4%  26.4%       1    0.188s
  └─autounfold  with parser_sharpen_db --   6.2%   6.2%       6    0.012s
  *)
-      (*Start Profiling.*)
+      Start Profiling.
       Time refine_binop_table.
-      (*Show Profile.*)
+      Show Profile.
       (* with [pose; change]:
 total time:     70.236s
 
@@ -88,37 +88,44 @@ total time:     70.236s
 └change x with x' in H -----------------  98.8%  98.8%       1   69.420s
 *)
       (* with [set]:
-total time:      0.548s
+total time:      0.912s
 
  tactic                                    self  total   calls       max
 ────────────────────────────────────────┴──────┴──────┴───────┴─────────┘
-─refine_binop_table --------------------   0.7% 100.0%       1    0.548s
-─setoid_rewrite_refine_binop_table_idx -  62.8%  99.3%       1    0.544s
-─replace_with_at_by --------------------   0.0%  18.2%       1    0.100s
-─replace_with_vm_compute_in ------------   0.0%  18.2%       1    0.100s
-─replace c with c' in H by (clear; vm_ca   0.0%  18.2%       1    0.100s
-─set_tac -------------------------------   0.0%   9.5%       1    0.052s
-─set (x' := x) in H --------------------   9.5%   9.5%       1    0.052s
-─induction H ---------------------------   6.6%   6.6%       1    0.036s
-─setoid_rewrite H ----------------------   4.4%   5.1%       1    0.028s
-─pose proof lem as H -------------------   4.4%   4.4%       1    0.024s
-─assert T0 as H0 by (clear; lazy beta io   0.7%   3.6%       1    0.020s
-─clear ---------------------------------   2.9%   2.9%       2    0.016s
+─refine_binop_table --------------------   0.4% 100.0%       1    0.912s
+─setoid_rewrite_refine_binop_table_idx -  38.2%  99.6%       1    0.908s
+─setoid_rewrite H ----------------------  29.4%  39.0%       1    0.356s
+─replace_with_at_by --------------------   0.0%  14.0%       1    0.128s
+─replace_with_vm_compute_in ------------   0.0%  14.0%       1    0.128s
+─replace c with c' in H by (clear; my_vm   0.0%  14.0%       1    0.128s
+─params --------------------------------   0.0%   7.5%       4    0.020s
+─induction H ---------------------------   6.1%   6.1%       1    0.056s
+─set_tac -------------------------------   0.4%   5.7%       1    0.052s
+─set (x' := x) in H --------------------   5.3%   5.3%       1    0.048s
+─assert (Params m' v) as H by typeclasse   0.0%   3.1%       4    0.008s
+─typeclasses eauto ---------------------   3.1%   3.1%       4    0.008s
+─clear n -------------------------------   3.1%   3.1%       4    0.008s
+─pose proof lem as H -------------------   2.6%   2.6%       1    0.024s
+─assert T0 as H0 by (clear; lazy beta io   0.0%   2.2%       1    0.020s
+─clear ---------------------------------   2.2%   2.2%       2    0.016s
 
  tactic                                    self  total   calls       max
 ────────────────────────────────────────┴──────┴──────┴───────┴─────────┘
-─refine_binop_table --------------------   0.7% 100.0%       1    0.548s
-└setoid_rewrite_refine_binop_table_idx -  62.8%  99.3%       1    0.544s
- ├─replace_with_vm_compute_in ----------   0.0%  18.2%       1    0.100s
- │└replace c with c' in H by (clear; vm_   0.0%  18.2%       1    0.100s
- │└replace_with_at_by ------------------   0.0%  18.2%       1    0.100s
- │ ├─set_tac ---------------------------   0.0%   9.5%       1    0.052s
- │ │└set (x' := x) in H ----------------   9.5%   9.5%       1    0.052s
- │ └─induction H -----------------------   6.6%   6.6%       1    0.036s
- ├─setoid_rewrite H --------------------   4.4%   5.1%       1    0.028s
- ├─pose proof lem as H -----------------   4.4%   4.4%       1    0.024s
- └─assert T0 as H0 by (clear; lazy beta    0.7%   3.6%       1    0.020s
-  └clear -------------------------------   2.9%   2.9%       1    0.016s
+─refine_binop_table --------------------   0.4% 100.0%       1    0.912s
+└setoid_rewrite_refine_binop_table_idx -  38.2%  99.6%       1    0.908s
+ ├─setoid_rewrite H --------------------  29.4%  39.0%       1    0.356s
+ │└params ------------------------------   0.0%   7.5%       4    0.020s
+ │ ├─assert (Params m' v) as H by typecl   0.0%   3.1%       4    0.008s
+ │ │└typeclasses eauto -----------------   3.1%   3.1%       4    0.008s
+ │ └─clear n ---------------------------   3.1%   3.1%       4    0.008s
+ ├─replace_with_vm_compute_in ----------   0.0%  14.0%       1    0.128s
+ │└replace c with c' in H by (clear; my_   0.0%  14.0%       1    0.128s
+ │└replace_with_at_by ------------------   0.0%  14.0%       1    0.128s
+ │ ├─induction H -----------------------   6.1%   6.1%       1    0.056s
+ │ └─set_tac ---------------------------   0.4%   5.7%       1    0.052s
+ │  └set (x' := x) in H ----------------   5.3%   5.3%       1    0.048s
+ ├─pose proof lem as H -----------------   2.6%   2.6%       1    0.024s
+ └─assert T0 as H0 by (clear; lazy beta    0.0%   2.2%       1    0.020s
  *)
 
       finish honing parser method.

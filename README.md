@@ -17,6 +17,18 @@ Some examples of Coq being really slow:
   make sure to let it set `coq-end-goals-regexp-show-subgoals` to
   `nil` appropriately.
 
+- Bugs [#4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643)
+  [#4640](https://coq.inria.fr/bugs/show_bug.cgi?id=4640), and
+  [#4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642): `Defined.`
+  sometimes takes 2 minutes; `End Section` can take 30 seconds, even
+  though there are no section variables, no tactics, no notations, no
+  `Let`s, and only one or two `Definition`s; and `cbv [some
+  identifiers]` can run through 64 GB of RAM in 15 minutes;
+  respectively.  See
+  [`slow_fiat_examples/README.md`](./slow_fiat_examples/README.md) for
+  more details and instructions on running.  (Be warned, some of the
+  examples of slowness themselves take 20 minutes to compile.)
+
 - [Bug #4625](https://coq.inria.fr/bugs/show_bug.cgi?id=4625) -
   checking `Defined`/`Qed` causes coqtop to drop the most recent proof
   state.  This makes it a pain to debug things like:

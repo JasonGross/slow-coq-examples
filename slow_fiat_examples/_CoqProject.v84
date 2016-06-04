@@ -62,6 +62,7 @@
 ./src/Parsers/ParserImplementationOptimized.v
 ./src/Parsers/Refinement/SharpenedJSON.v
 ./src/Parsers/Refinement/DisjointRulesRev.v
+./src/Parsers/Refinement/SharpenedJSONDependencies.v
 ./src/Parsers/Refinement/BinOpBrackets/ParenBalanced.v
 ./src/Parsers/Refinement/BinOpBrackets/MakeBinOpTable.v
 ./src/Parsers/Refinement/BinOpBrackets/BinOpRules.v

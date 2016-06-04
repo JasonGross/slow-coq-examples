@@ -64,6 +64,7 @@ src/Parsers/SimpleBooleanRecognizerEquality.v
 src/Parsers/ParserImplementationOptimized.v
 src/Parsers/Refinement/SharpenedJSON.v
 src/Parsers/Refinement/DisjointRulesRev.v
+src/Parsers/Refinement/SharpenedJSONDependencies.v
 src/Parsers/Refinement/SharpenedJSONNative.v
 src/Parsers/Refinement/SlowEndSectionNative.v
 src/Parsers/Refinement/BinOpBrackets/ParenBalanced.v

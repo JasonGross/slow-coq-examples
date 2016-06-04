@@ -7,8 +7,12 @@ cp _CoqProject{.v84,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1
 
 To build in Coq 8.5, run
 ```
-cp _CoqProject{.v85,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1 src/Parsers/Refinement/SlowEndSection.vo src/Parsers/Refinement/SlowEndSectionNative.vo -j
+cp _CoqProject{.v85,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1 src/Parsers/Refinement/SharpenedJSONDependencies.vo -j && make TIMED=1 OTHERFLAGS="-compat 8.4" src/Parsers/Refinement/SlowEndSection.vo src/Parsers/Refinement/SlowEndSectionNative.vo -j
 ```
+
+N.B. Your system will run out of memory (mine did with 64 GB of RAM)
+if you try to compile `src/Parsers/Refinement/SharpenedJSON` to native
+code.  This is why there are two invocations of `make`.
 
 The relevant issues are:
 

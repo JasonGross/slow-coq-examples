@@ -2,20 +2,39 @@
 
 To build in Coq 8.4, run
 ```
-cp _CoqProject{.v84,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1 src/Parsers/Refinement/SharpenedJSON.vo -j
+cp _CoqProject{.v84,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1 src/Parsers/Refinement/SlowEndSection.vo -j
 ```
 
 To build in Coq 8.5, run
 ```
-cp _CoqProject{.v85,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1 src/Parsers/Refinement/SharpenedJSON.vo -j
+cp _CoqProject{.v85,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1 src/Parsers/Refinement/SlowEndSection.vo src/Parsers/Refinement/SlowEndSectionNative.vo -j
 ```
 
 The relevant issues are:
 
-- `Defined.` sometimes takes 2 minutes ([bug #4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643))
-  . This is the first `Time Defined.` in [src/Parsers/Refinement/SharpenedJSON.v](./src/Parsers/Refinement/SharpenedJSON.v)
+- `Defined.` sometimes takes 2 minutes ([bug
+  #4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643))
 
-- `End Section` can take 30 seconds, even though there are no section variables, no tactics, no notations, no `Let`s, and only two `Definition`s ([bug #4640](https://coq.inria.fr/bugs/show_bug.cgi?id=4640))
+  . This is the `Time Definition ComputationalSplitter' ...` in
+    [src/Parsers/Refinement/SlowEndSection.v](./src/Parsers/Refinement/SlowEndSection.v).
+    (Actually, for unknown reasons, although the `Defined` only takes
+    2 minutes, this `Definition` takes 581 seconds in 8.5, and a
+    whopping 1266 seconds in 8.4.)
+
+  . To see it as a `Defined`, look at the first `Time Defined.` in
+    [src/Parsers/Refinement/SharpenedJSON.v](./src/Parsers/Refinement/SharpenedJSON.v).
+    The `SlowEndSection.v` file is to be able to skip over the 7-15
+    minute-long proof script, if you want to compile the script in
+    advance.
+
+  . Look at
+    [src/Parsers/Refinement/SlowEndSectionNative.v](./src/Parsers/Refinement/SlowEndSectionNative.v)
+    in Coq 8.5 to see the effect of using `native_compute` rather than
+    `vm_compute`
+
+- `End Section` can take 30 seconds, even though there are no section variables, no tactics, no notations, no `Let`s, and only one or two `Definition`s ([bug #4640](https://coq.inria.fr/bugs/show_bug.cgi?id=4640))
+
+  . This is `Time End IndexedImpl.` in [src/Parsers/Refinement/SharpenedJSON.v](./src/Parsers/Refinement/SharpenedJSON.v)
 
   . This is `Time End IndexedImpl.` in [src/Parsers/Refinement/SharpenedJSON.v](./src/Parsers/Refinement/SharpenedJSON.v)
 
@@ -70,3 +89,10 @@ alternatives in 8.5.  See [bug
 #3280](https://coq.inria.fr/bugs/show_bug.cgi?id=3280) ([comment
 13](https://coq.inria.fr/bugs/show_bug.cgi?id=3280#c13)) for more
 details.)
+
+
+Note: To rebuild the `_CoqProject` files, use:
+```bash
+(echo "-R src Fiat"; echo '-arg "-compat 8.4"'; echo '-arg "-native-compiler"'; find src -name "*.v" -a ! -name "*#*") > _CoqProject.v85
+(echo "-R src Fiat"; find . -name "*.v" -a ! -name "*Native.v" -a ! -name "*#*") > _CoqProject.v84
+```

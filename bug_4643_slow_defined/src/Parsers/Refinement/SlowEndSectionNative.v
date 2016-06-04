@@ -12,13 +12,4 @@ Section IndexedImpl.
   Time Definition ComputationalSplitter'
   : FullySharpened (string_spec json'_grammar string_stringlike)
     := Eval cbv delta [SharpenedJSONNative.ComputationalSplitter'] in SharpenedJSONNative.ComputationalSplitter'.
-
-  Lemma ComputationalSplitter
-  : FullySharpened (string_spec json'_grammar string_stringlike).
-  Proof.
-    (*Start Profiling.*)
-    Time make_simplified_splitter ComputationalSplitter'.
-    (*Show Profile.*)
-  Time Defined.
-
 Time End IndexedImpl.

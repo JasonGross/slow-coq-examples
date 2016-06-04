@@ -11,14 +11,5 @@ Require Fiat.Parsers.Refinement.SharpenedJSON.
 Section IndexedImpl.
   Time Definition ComputationalSplitter'
   : FullySharpened (string_spec json'_grammar string_stringlike)
-    := Eval cbv delta [SharpenedJSON.ComputationalSplitter'] in SharpenedJSON.ComputationalSplitter'.
-
-  Lemma ComputationalSplitter
-  : FullySharpened (string_spec json'_grammar string_stringlike).
-  Proof.
-    (*Start Profiling.*)
-    Time make_simplified_splitter ComputationalSplitter'.
-    (*Show Profile.*)
-  Time Defined.
-
-Time End IndexedImpl.
+    := Eval cbv delta [SharpenedJSON.ComputationalSplitter'] in SharpenedJSON.ComputationalSplitter'. (* 581 s in 8.5, 1266 s in 8.4 *)
+Time End IndexedImpl. (* 14 s in 8.5 *)

@@ -27,6 +27,23 @@ Some examples of Coq being really slow:
   Also, see this [graph of the time of tactics vs the size of
   goal](./evar-normalization-slowness/graph.svg)
 
+- [Bug #4777](https://coq.inria.fr/bugs/show_bug.cgi?id=4777) - unless
+  `Set Silent` is on, the printing time is impacted by large terms
+  that don't print - see
+  [`interactive_hidden_slowness.v`](./interactive_hidden_slowness.v)
+  ([`interactive_hidden_slowness.sh`](./interactive_hidden_slowness.sh)
+  for Coq 8.5, unless you want to use `coqtop -emacs -time <
+  interactive_hidden_slowness.v`)
+
+- [Bug #4662](https://coq.inria.fr/bugs/show_bug.cgi?id=4662) -
+  `unfold ... in ...` should insert a cast annotation, else `Defined`
+  can take over 6 minutes when it doesn't need to - see
+  [`slow_unfold.v`](./slow_unfold.v)
+
+- [Bug #4637](https://coq.inria.fr/bugs/show_bug.cgi?id=4637) -
+  `vm_compute in ...` should insert vm_casts - see
+  [`missing_vm_casts.v`](./missing_vm_casts.v)
+
 - [Bug #4776](https://coq.inria.fr/bugs/show_bug.cgi?id=4776) - there
   should be a way to terminate typeclass resolution early - see
   [`slow_failing_setoid_rewrite.v`](./slow_failing_setoid_rewrite.v)
@@ -60,6 +77,25 @@ Some examples of Coq being really slow:
   more details and instructions on running.  (Be warned, some of the
   examples of slowness themselves take 20 minutes to compile.)
 
+- [Bug #4657](https://coq.inria.fr/bugs/show_bug.cgi?id=4657) -
+  `omega` is slow on `x - y - (x - y - x) = x - y` (takes about 1 s,
+  when it solves an equivalent equation in 0.06 s) - see
+  [`slow_omega.v`](./slow_omega.v)
+
+- [Bug #4187](https://coq.inria.fr/bugs/show_bug.cgi?id=4187) -
+  `admit` is slow on a goal of the form `G' -> Prop` when it's fast on
+  a goal of the form `G'` - see [`slow_admit.v`](./slow_admit.v)
+
+- [Bug #3448](https://coq.inria.fr/bugs/show_bug.cgi?id=3448) - `Hint
+  Extern (foo _) => ...` is significantly slower than `Hint Extern foo
+  => ...`; typeclass resolution is slow at `intro` - see
+  [`slow_typeclasses_intro.v`](./slow_typeclasses_intro.v)
+
+- [Bug #3425](https://coq.inria.fr/bugs/show_bug.cgi?id=3425) -
+  unification can be very slow - see
+  [`slow_unification.v`](./slow_unification.v).  (Matthieu's
+  explanation in the file.)
+
 - [Bug #4625](https://coq.inria.fr/bugs/show_bug.cgi?id=4625) -
   checking `Defined`/`Qed` causes coqtop to drop the most recent proof
   state.  This makes it a pain to debug things like:
@@ -70,3 +106,49 @@ Proof.
   some_tactic_that_makes_Defined_slow.
 Defined.
 ```
+
+
+## Already fixed or partially fixed issues:
+
+- [Bug #4537](https://coq.inria.fr/bugs/show_bug.cgi?id=4537) - Coq
+  8.5 is slower (sometimes by as much as 5x-6x) than Coq 8.5beta2 in
+  typeclass resolution with identical traces.   Pierre-Marie Pédrot said:
+
+> All right, I think I'm the responsible here. This is probably
+> because of commit a895b2c0ca that introduced a performance
+> enhancement of auto hints *in the non-polymorphic case*. The
+> polymorphic case has a nice comment
+```ocaml
+(** FIXME: We're being inefficient here because we substitute the whole
+          evar map instead of just its metas, which are the only ones
+          mentioning the old universes. *)
+```
+> which is exactly the hotspot I'm seeing right there. I'll write a quick fix.
+
+  and then, after fixing that, said:
+
+> Note that there is still a hotspot that looks suspicious to
+> me. Indeed, the code for Evarsolve.noccur_evar whose goal is
+> essentially to ensure that an evar does not appear in a term
+> repeatedly calls the following snippet of code
+```ocaml
+    let c =
+      try Retyping.expand_projection env evd p c []
+      with Retyping.RetypeError _ ->
+	(* Can happen when called from w_unify which doesn't assign evars/metas
+	   eagerly enough *) c
+    in occur_rec acc c
+```
+> which is responsible for ~50% of the time passed in one of your
+> tactics for no good reason.
+
+- [Bug #3450](https://coq.inria.fr/bugs/show_bug.cgi?id=3450) - `End
+  foo.` is slower in trunk in some cases; it's also slower in batch
+  mode than in interactive mode.  The original slowdown was due to
+  hashconsing of universes (then to substituting universes) on leaving
+  a section.  But now the example has gotten orders of magnitude
+  slower, in earlier places.
+
+- [Bug #3447](https://coq.inria.fr/bugs/show_bug.cgi?id=3447) - Some
+  `Defined`s are 30x slower in trunk - most of the time was spent
+  hashconsing universes.

@@ -12,6 +12,9 @@ cp _CoqProject{.v85,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1
 
 Then look at the times for `simpl @fst` and `simpl @snd` in
 [`src/Parsers/Refinement/SharpenedJSONDebug.v`](./src/Parsers/Refinement/SharpenedJSONDebug.v).
+While `simpl @fst` is essentially instantaneous, `simpl @snd` does not
+finish in the first hour of execution (though doesn't use more than 2
+GB of RAM).
 
 Note: To rebuild the `_CoqProject` files, use:
 ```bash

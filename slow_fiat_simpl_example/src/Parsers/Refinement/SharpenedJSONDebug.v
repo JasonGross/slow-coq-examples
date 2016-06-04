@@ -24,7 +24,7 @@ Proof.
   let term := (eval splitter_red0 in term) in
   pose term as term0. (* 16 s *)
   Time simpl @fst in term0. (* 0.008 s *)
-  Time simpl @snd in term0. (* 7 minutes and counting, even though really all I want to do is [change (fst (?x, ?y)) with x] *)
+  Time simpl @snd in term0. (* 1 hour and counting, even though really all I want to do is [change (fst (?x, ?y)) with x] *)
   Time let splitter := constr:(SharpenedJSON.ComputationalSplitter') in
   let impl := (eval cbv [term0] in term0) in
   refine (existT _ impl _);

@@ -77,6 +77,7 @@
 ./src/Parsers/Refinement/PreTactics.v
 ./src/Parsers/Refinement/FixedLengthLemmas.v
 ./src/Parsers/Refinement/DisjointRules.v
+./src/Parsers/Refinement/SharpenedJSONSlowSet.v
 ./src/Parsers/Refinement/IndexedAndAtMostOneNonTerminalReflectiveOpt.v
 ./src/Parsers/Refinement/IndexedAndAtMostOneNonTerminalReflective.v
 ./src/Parsers/ParserFromParserADT.v

@@ -3,7 +3,8 @@ Some examples of Coq being really slow:
 
 - [Bug #4636](https://coq.inria.fr/bugs/show_bug.cgi?id=4636) - `set
   (x := y)` can be 100x slower than `pose y as x; change y with x` -
-  see [`slow_set.v`](./slow_set.v)
+  see [`slow_set.v`](./slow_set.v).  (The reverse can also happen,
+  where `change` is orders of magnitude slower than `set`.)
 
 - [Bug #3280](https://coq.inria.fr/bugs/show_bug.cgi?id=3280) `match
   goal with |- ?f ?x = ?g ?y => idtac end` can be arbitrarily slow -

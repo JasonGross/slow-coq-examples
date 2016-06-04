@@ -62,6 +62,7 @@
 ./src/Parsers/ParserImplementationOptimized.v
 ./src/Parsers/Refinement/SharpenedJSON.v
 ./src/Parsers/Refinement/DisjointRulesRev.v
+./src/Parsers/Refinement/SharpenedJavaScriptAssignmentExpression.v
 ./src/Parsers/Refinement/BinOpBrackets/ParenBalanced.v
 ./src/Parsers/Refinement/BinOpBrackets/MakeBinOpTable.v
 ./src/Parsers/Refinement/BinOpBrackets/BinOpRules.v
@@ -144,6 +145,7 @@
 ./src/Parsers/ContextFreeGrammar/SimpleTransfer.v
 ./src/Parsers/ContextFreeGrammar/TransferProperties.v
 ./src/Parsers/ContextFreeGrammar/Notations.v
+./src/Parsers/Grammars/JavaScriptAssignmentExpression.v
 ./src/Parsers/Grammars/JSONImpoverished.v
 ./src/Parsers/SplitterFromParserADT.v
 ./src/Parsers/ParserADTSpecification.v

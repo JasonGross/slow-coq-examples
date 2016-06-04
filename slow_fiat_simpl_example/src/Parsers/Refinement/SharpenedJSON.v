@@ -100,7 +100,7 @@ total time:    350.916s
     finish_Sharpening_SplitterADT.
 
   Time Defined.
-
+(*
   Lemma ComputationalSplitter
   : FullySharpened (string_spec json'_grammar string_stringlike).
   Proof.
@@ -108,7 +108,7 @@ total time:    350.916s
     Time make_simplified_splitter ComputationalSplitter'.
     (*Show Profile.*)
   Time Defined.
-
+*)
 Time End IndexedImpl.
 
 Require Export Fiat.Parsers.ParserFromParserADT.

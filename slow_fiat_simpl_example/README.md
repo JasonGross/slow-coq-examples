@@ -10,6 +10,8 @@ To build dependencies in Coq 8.5, run
 cp _CoqProject{.v85,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1 src/Parsers/Refinement/SharpenedJSON.vo -j
 ```
 
+Then look at the times for `simpl @fst` and `simpl @snd` in
+[`src/Parsers/Refinement/SharpenedJSONDebug.v`](./src/Parsers/Refinement/SharpenedJSONDebug.v).
 
 Note: To rebuild the `_CoqProject` files, use:
 ```bash

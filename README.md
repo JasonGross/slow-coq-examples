@@ -7,7 +7,10 @@ Coq doing work it doesn't need to do.  Usually, this work comes in the
 form of retypechecking terms it shouldn't need to retypecheck, and
 occasionally it comes in the form of (re)doing typeclass search that
 can be known to be useless.  I don't want to have to micro-optimize my
-tactic scripts to get 1000x speed-ups.
+tactic scripts to get 1000x speed-ups.  In general, I have the sense
+that I can't trust Coq to be fast, and I can't trust scripts that are
+fast to remain fast in future versions of Coq unless I'm proactive
+about reporting bugs and performance regressions.
 
 ## Specifics
 
@@ -147,7 +150,11 @@ Defined.
   mode than in interactive mode.  The original slowdown was due to
   hashconsing of universes (then to substituting universes) on leaving
   a section.  But now the example has gotten orders of magnitude
-  slower, in earlier places.
+  slower, in earlier places.  See
+  [`super_slow_end_section_and_record.v`](./super_slow_end_section_and_record.v)
+  (Coq 8.5 only).  The `Pseudofunctor` record takes 999 s to be
+  defined, and you can watch the `<projection> is definted` messages
+  appear one by one, very slowly.
 
 - [Bug #3447](https://coq.inria.fr/bugs/show_bug.cgi?id=3447) - Some
   `Defined`s are 30x slower in trunk - most of the time was spent

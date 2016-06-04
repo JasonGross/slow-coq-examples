@@ -62,8 +62,8 @@ Some examples of Coq being really slow:
 - [Bug #4636](https://coq.inria.fr/bugs/show_bug.cgi?id=4636) - `set
   (x := y)` can be 100x slower than `pose y as x; change y with x` -
   see [`slow_set.v`](./slow_set.v).  (The reverse can also happen,
-  where `change` is orders of magnitude slower than `set`.  See, [bug
-  #4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779) in the next
+  where `change` is orders of magnitude slower than `set`.  See
+  [bug #4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779) in the next
   bullet.)
 
 - Bugs [#4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643)
@@ -101,6 +101,17 @@ Some examples of Coq being really slow:
   unification can be very slow - see
   [`slow_unification.v`](./slow_unification.v).  (Matthieu's
   explanation in the file.)
+
+- [Bug #3450](https://coq.inria.fr/bugs/show_bug.cgi?id=3450) - `End
+  foo.` is slower in trunk in some cases; it's also slower in batch
+  mode than in interactive mode.  The original slowdown was due to
+  hashconsing of universes (then to substituting universes) on leaving
+  a section.  But now the example has gotten orders of magnitude
+  slower, in earlier places.  See
+  [`super_slow_end_section_and_record.v`](./super_slow_end_section_and_record.v)
+  (Coq 8.5 only).  The `Pseudofunctor` record takes 999 s to be
+  defined, and you can watch the `<projection> is definted` messages
+  appear one by one, very slowly.
 
 - [Bug #4625](https://coq.inria.fr/bugs/show_bug.cgi?id=4625) -
   checking `Defined`/`Qed` causes coqtop to drop the most recent proof
@@ -147,17 +158,6 @@ Defined.
 ```
 > which is responsible for ~50% of the time passed in one of your
 > tactics for no good reason.
-
-- [Bug #3450](https://coq.inria.fr/bugs/show_bug.cgi?id=3450) - `End
-  foo.` is slower in trunk in some cases; it's also slower in batch
-  mode than in interactive mode.  The original slowdown was due to
-  hashconsing of universes (then to substituting universes) on leaving
-  a section.  But now the example has gotten orders of magnitude
-  slower, in earlier places.  See
-  [`super_slow_end_section_and_record.v`](./super_slow_end_section_and_record.v)
-  (Coq 8.5 only).  The `Pseudofunctor` record takes 999 s to be
-  defined, and you can watch the `<projection> is definted` messages
-  appear one by one, very slowly.
 
 - [Bug #3447](https://coq.inria.fr/bugs/show_bug.cgi?id=3447) - Some
   `Defined`s are 30x slower in trunk - most of the time was spent

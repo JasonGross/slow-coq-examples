@@ -16,39 +16,43 @@ The relevant issues are:
   #4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643))
 
   . This is the `Time Definition ComputationalSplitter' ...` in
-    [src/Parsers/Refinement/SlowEndSection.v](./src/Parsers/Refinement/SlowEndSection.v).
+    [`src/Parsers/Refinement/SlowEndSection.v`](./src/Parsers/Refinement/SlowEndSection.v).
     (Actually, for unknown reasons, although the `Defined` only takes
     2 minutes, this `Definition` takes 581 seconds in 8.5, and a
     whopping 1266 seconds in 8.4.)
 
   . To see it as a `Defined`, look at the first `Time Defined.` in
-    [src/Parsers/Refinement/SharpenedJSON.v](./src/Parsers/Refinement/SharpenedJSON.v).
+    [`src/Parsers/Refinement/SharpenedJSON.v`](./src/Parsers/Refinement/SharpenedJSON.v).
     The `SlowEndSection.v` file is to be able to skip over the 7-15
     minute-long proof script, if you want to compile the script in
     advance.
 
   . Look at
-    [src/Parsers/Refinement/SlowEndSectionNative.v](./src/Parsers/Refinement/SlowEndSectionNative.v)
+    [`src/Parsers/Refinement/SlowEndSectionNative.v`](./src/Parsers/Refinement/SlowEndSectionNative.v)
     in Coq 8.5 to see the effect of using `native_compute` rather than
     `vm_compute`
 
 - `End Section` can take 30 seconds, even though there are no section variables, no tactics, no notations, no `Let`s, and only one or two `Definition`s ([bug #4640](https://coq.inria.fr/bugs/show_bug.cgi?id=4640))
 
   . This is `Time End IndexedImpl.` in
-    [src/Parsers/Refinement/SlowEndSection.v](./src/Parsers/Refinement/SlowEndSection.v)
+    [`src/Parsers/Refinement/SlowEndSection.v`](./src/Parsers/Refinement/SlowEndSection.v)
     (or
-    [src/Parsers/Refinement/SlowEndSectionNative.v](./src/Parsers/Refinement/SlowEndSectionNative.v)
+    [`src/Parsers/Refinement/SlowEndSectionNative.v`](./src/Parsers/Refinement/SlowEndSectionNative.v)
     to see the impact of `native_compute` in 8.5)
 
   . Alterntively, to see the original example, look at `Time End
     IndexedImpl.` in
-    [src/Parsers/Refinement/SharpenedJSON.v](./src/Parsers/Refinement/SharpenedJSON.v)
+    [`src/Parsers/Refinement/SharpenedJSON.v`](./src/Parsers/Refinement/SharpenedJSON.v).
+    This is actually faster in 8.4 than looking at
+    [`src/Parsers/Refinement/SlowEndSection.v`](./src/Parsers/Refinement/SlowEndSection.v),
+    because retypechecking the proof apparently takes a bit longer
+    than the entire proof script and the `Defined` combined.
 
 - `cbv [some identifiers]` can run through 64 GB of RAM in 15 minutes
   ([bug #4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642))
 
   . This is `let term := (eval parser_red5 in term) in` in
-    [src/Parsers/Refinement/SharpenedJSONDebug.v](./src/Parsers/Refinement/SharpenedJSONDebug.v)
+    [`src/Parsers/Refinement/SharpenedJSONDebug.v`](./src/Parsers/Refinement/SharpenedJSONDebug.v)
 
 
 For convenience, the log of times in `SharpenedJSON`:

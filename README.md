@@ -10,7 +10,9 @@ Some examples of Coq being really slow:
   see
   [`evar-normalization-slowness/very_silly_slow_tactic.v`](./evar-normalization-slowness/very_silly_slow_tactic.v)
   and
-  [`evar-normalization-slowness/exercise-tactics/exercise-tactics.sh`](./evar-normalization-slowness/exercise-tactics/exercise-tactics.sh).  Also, see this [graph of the time of tactics vs the size of goal](./evar-normalization-slowness/graph.svg)
+  [`evar-normalization-slowness/exercise-tactics/exercise-tactics.sh`](./evar-normalization-slowness/exercise-tactics/exercise-tactics.sh).
+  Also, see this [graph of the time of tactics vs the size of
+  goal](./evar-normalization-slowness/graph.svg)
 
 - [Bug #4776](https://coq.inria.fr/bugs/show_bug.cgi?id=4776) - there
   should be a way to terminate typeclass resolution early - see

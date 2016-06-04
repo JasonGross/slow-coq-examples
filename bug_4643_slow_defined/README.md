@@ -34,13 +34,21 @@ The relevant issues are:
 
 - `End Section` can take 30 seconds, even though there are no section variables, no tactics, no notations, no `Let`s, and only one or two `Definition`s ([bug #4640](https://coq.inria.fr/bugs/show_bug.cgi?id=4640))
 
-  . This is `Time End IndexedImpl.` in [src/Parsers/Refinement/SharpenedJSON.v](./src/Parsers/Refinement/SharpenedJSON.v)
+  . This is `Time End IndexedImpl.` in
+    [src/Parsers/Refinement/SlowEndSection.v](./src/Parsers/Refinement/SlowEndSection.v)
+    (or
+    [src/Parsers/Refinement/SlowEndSectionNative.v](./src/Parsers/Refinement/SlowEndSectionNative.v)
+    to see the impact of `native_compute` in 8.5)
 
-  . This is `Time End IndexedImpl.` in [src/Parsers/Refinement/SharpenedJSON.v](./src/Parsers/Refinement/SharpenedJSON.v)
+  . Alterntively, to see the original example, look at `Time End
+    IndexedImpl.` in
+    [src/Parsers/Refinement/SharpenedJSON.v](./src/Parsers/Refinement/SharpenedJSON.v)
 
-- `cbv [some identifiers]` can run through 64 GB of RAM in 15 minutes ([bug #4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642))
+- `cbv [some identifiers]` can run through 64 GB of RAM in 15 minutes
+  ([bug #4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642))
 
-  . This is `let term := (eval parser_red5 in term) in` in [src/Parsers/Refinement/SharpenedJSONDebug.v](./src/Parsers/Refinement/SharpenedJSONDebug.v)
+  . This is `let term := (eval parser_red5 in term) in` in
+    [src/Parsers/Refinement/SharpenedJSONDebug.v](./src/Parsers/Refinement/SharpenedJSONDebug.v)
 
 
 For convenience, the log of times in `SharpenedJSON`:

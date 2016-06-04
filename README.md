@@ -5,6 +5,13 @@ Some examples of Coq being really slow:
   (x := y)` can be 100x slower than `pose y as x; change y with x` -
   see [slow_set.v](./slow_set.v)
 
+- [Bug #3280](https://coq.inria.fr/bugs/show_bug.cgi?id=3280) `match
+  goal with |- ?f ?x = ?g ?y => idtac end` can be arbitrarily slow -
+  see
+  [`evar-normalization-slowness/very_silly_slow_tactic.v`](./evar-normalization-slowness/very_silly_slow_tactic.v)
+  and
+  [`evar-normalization-slowness/exercise-tactics/exercise-tactics.sh`](./evar-normalization-slowness/exercise-tactics/exercise-tactics.sh).
+
 - [Bug #4776](https://coq.inria.fr/bugs/show_bug.cgi?id=4776) - there
   should be a way to terminate typeclass resolution early - see
   [slow_failing_setoid_rewrite.v](./slow_failing_setoid_rewrite.v)

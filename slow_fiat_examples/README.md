@@ -12,7 +12,7 @@ cp _CoqProject{.v85,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1
 
 N.B. Your system will run out of memory (mine did with 64 GB of RAM)
 if you try to compile `src/Parsers/Refinement/SharpenedJSON` to native
-code.  This is why there are two invocations of `make`.
+code.  This is why there are two invocations of `make` for Coq 8.5.
 
 The relevant issues are:
 
@@ -61,7 +61,7 @@ The relevant issues are:
   . This is `let term := (eval parser_red5 in term) in` in
     [`src/Parsers/Refinement/SharpenedJSONDebug.v`](./src/Parsers/Refinement/SharpenedJSONDebug.v)
 
-- `pose y as x; change y with x in H` can take 140x longer than `set
+- `pose y as x; change y with x in H` can take 1300x longer than `set
   (x := y) in H`.  See `Time refine_binop_table.` in
   [`src/Parsers/Refinement/SharpenedExpressionPlusParen.v`](./src/Parsers/Refinement/SharpenedExpressionPlusParen.v).
 

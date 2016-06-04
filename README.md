@@ -1,10 +1,21 @@
 # slow-coq-examples
+
+## Preface
+
+My experience with slowness is that slowness is most often caused by
+Coq doing work it doesn't need to do.  Usually, this work comes in the
+form of retypechecking terms it shouldn't need to retypecheck, and
+occasionally it comes in the form of (re)doing typeclass search that
+can be known to be useless.
+
+## Specifics
+
 Some examples of Coq being really slow:
 
 - [Bug #4636](https://coq.inria.fr/bugs/show_bug.cgi?id=4636) - `set
   (x := y)` can be 100x slower than `pose y as x; change y with x` -
   see [`slow_set.v`](./slow_set.v).  (The reverse can also happen,
-  where `change` is orders of magnitude slower than `set`.)
+  where `change` is orders of magnitude slower than `set`.  See, e.g., te )
 
 - [Bug #3280](https://coq.inria.fr/bugs/show_bug.cgi?id=3280) `match
   goal with |- ?f ?x = ?g ?y => idtac end` can be arbitrarily slow -
@@ -14,6 +25,11 @@ Some examples of Coq being really slow:
   [`evar-normalization-slowness/exercise-tactics/exercise-tactics.sh`](./evar-normalization-slowness/exercise-tactics/exercise-tactics.sh).
   Also, see this [graph of the time of tactics vs the size of
   goal](./evar-normalization-slowness/graph.svg)
+
+- [Bug #3441](https://coq.inria.fr/bugs/show_bug.cgi?id=3441) - `pose
+  proof H as k` is sometimes an order of magnitude slower than `pose H
+  as k; clearbody k` - see [`slow_pose_proof.v`](./slow_pose_proof.v)
+  for an example of a 4x slowdown.
 
 - [Bug #4776](https://coq.inria.fr/bugs/show_bug.cgi?id=4776) - there
   should be a way to terminate typeclass resolution early - see

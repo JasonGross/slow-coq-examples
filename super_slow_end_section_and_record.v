@@ -8464,7 +8464,7 @@ Section pseudofunctor.
           = ((right_identity_natural_transformation_2 (p_morphism_of x y f))
                o (Category.Morphisms.idtoiso (_ -> _) (ap (p_morphism_of x y) (Category.Core.right_identity C x y f)) : morphism _ _ _))
     }. (* Finished transaction in 999.206 secs (998.952u,0.184s) (successful) *)
-Time End pseudofunctor.
+Time End pseudofunctor. (* Finished transaction in 981.981 secs (981.08u,0.488s) (successful) *)
 
 Delimit Scope pseudofunctor_scope with pseudofunctor.
 Bind Scope pseudofunctor_scope with Pseudofunctor.

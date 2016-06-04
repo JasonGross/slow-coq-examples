@@ -81,8 +81,8 @@ src/Parsers/Refinement/FinishingLemma.v
 src/Parsers/Refinement/PreTactics.v
 src/Parsers/Refinement/FixedLengthLemmas.v
 src/Parsers/Refinement/DisjointRules.v
-src/Parsers/Refinement/SharpenedJSONSlowSet.v
 src/Parsers/Refinement/IndexedAndAtMostOneNonTerminalReflectiveOpt.v
+src/Parsers/Refinement/SharpenedExpressionPlusParen.v
 src/Parsers/Refinement/IndexedAndAtMostOneNonTerminalReflective.v
 src/Parsers/ParserFromParserADT.v
 src/Parsers/ParserImplementation.v
@@ -151,6 +151,7 @@ src/Parsers/ContextFreeGrammar/Equality.v
 src/Parsers/ContextFreeGrammar/SimpleTransfer.v
 src/Parsers/ContextFreeGrammar/TransferProperties.v
 src/Parsers/ContextFreeGrammar/Notations.v
+src/Parsers/Grammars/ExpressionNumPlusParen.v
 src/Parsers/Grammars/JSONImpoverished.v
 src/Parsers/SplitterFromParserADT.v
 src/Parsers/ParserADTSpecification.v

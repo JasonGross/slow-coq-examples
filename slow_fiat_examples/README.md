@@ -2,12 +2,12 @@
 
 To build in Coq 8.4, run
 ```
-cp _CoqProject{.v84,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1 src/Parsers/Refinement/SlowEndSection.vo -j
+cp _CoqProject{.v84,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1 src/Parsers/Refinement/SlowEndSection.vo src/Parsers/Grammars/ExpressionNumPlusParen.vo -j
 ```
 
 To build in Coq 8.5, run
 ```
-cp _CoqProject{.v85,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1 src/Parsers/Refinement/SharpenedJSONDependencies.vo -j && make TIMED=1 OTHERFLAGS="-compat 8.4" src/Parsers/Refinement/SlowEndSection.vo src/Parsers/Refinement/SlowEndSectionNative.vo -j
+cp _CoqProject{.v85,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1 src/Parsers/Refinement/SharpenedJSONDependencies.vo src/Parsers/Grammars/ExpressionNumPlusParen.vo -j && make TIMED=1 OTHERFLAGS="-compat 8.4" src/Parsers/Refinement/SlowEndSection.vo src/Parsers/Refinement/SlowEndSectionNative.vo -j
 ```
 
 N.B. Your system will run out of memory (mine did with 64 GB of RAM)
@@ -61,6 +61,9 @@ The relevant issues are:
   . This is `let term := (eval parser_red5 in term) in` in
     [`src/Parsers/Refinement/SharpenedJSONDebug.v`](./src/Parsers/Refinement/SharpenedJSONDebug.v)
 
+- `pose y as x; change y with x in H` can take 140x longer than `set
+  (x := y) in H`.  See `Time refine_binop_table.` in
+  [`src/Parsers/Refinement/SharpenedExpressionPlusParen.v`](./src/Parsers/Refinement/SharpenedExpressionPlusParen.v).
 
 For convenience, the log of times in `SharpenedJSON`:
 

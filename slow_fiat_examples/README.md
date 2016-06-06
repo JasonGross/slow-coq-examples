@@ -143,6 +143,24 @@ Finished transaction in 0. secs (0.0719999999997u,0.004s)  Time Defined.
 Finished transaction in 31. secs (31.164u,0.028s)          Time End IndexedImpl.
 ```
 
+In Coq 8.4pl6 using `cbv`:
+```
+Finished transaction in 0. secs (0.u,0.s)                  Time start sharpening ADT.
+Finished transaction in 7. secs (7.8u,0.032s)              Time start honing parser using indexed representation.
+Finished transaction in 2. secs (1.352u,0.008s)            Time hone method "splits".
+Finished transaction in 28. secs (27.924u,0.08s)           Time simplify parser splitter.
+Finished transaction in 3648. secs (3645.816u,0.892s)      Time rewrite_disjoint_search_for.
+Finished transaction in 251. secs (251.26u,0.s)            Time rewrite_disjoint_rev_search_for.
+Finished transaction in 732. secs (731.56u,0.012s)         Time progress repeat refine_binop_table.
+Finished transaction in 28. secs (28.42u,0.s)              Time simplify parser splitter.
+Finished transaction in 2. secs (1.832u,0.s)               Time finish honing parser method.
+Finished transaction in 0. secs (0.076u,0.s)               Time finish_Sharpening_SplitterADT.
+Finished transaction in 1258. secs (1257.448u,0.104s)      Time Defined.
+Finished transaction in 16. secs (16.552u,0.12s)           Time make_simplified_splitter ComputationalSplitter'.
+Finished transaction in 1. secs (0.076u,0.s)               Time Defined.
+Finished transaction in 30. secs (30.856u,0.016s)          Time End IndexedImpl.
+```
+
 So something performance-tuned for Coq 8.4 can be much slower in Coq
 8.5.  (I suspect part of it is that `set (x := y)` is about 50x slower
 than it needs to be in Coq 8.4, but is about 4x faster than the

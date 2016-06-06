@@ -146,10 +146,10 @@ Finished transaction in 31. secs (31.164u,0.028s)          Time End IndexedImpl.
 So something performance-tuned for Coq 8.4 can be much slower in Coq
 8.5.  (I suspect part of it is that `set (x := y)` is about 50x slower
 than it needs to be in Coq 8.4, but is about 4x faster than the
-alternatives in 8.5.  See [bug
-#3280](https://coq.inria.fr/bugs/show_bug.cgi?id=3280) ([comment
-13](https://coq.inria.fr/bugs/show_bug.cgi?id=3280#c13)) for more
-details.)
+alternatives in 8.5.  See 
+[bug #3280](https://coq.inria.fr/bugs/show_bug.cgi?id=3280)
+([comment 13](https://coq.inria.fr/bugs/show_bug.cgi?id=3280#c13))
+for more details.)
 
 
 Note: To rebuild the `_CoqProject` files, use:

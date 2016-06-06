@@ -125,6 +125,24 @@ Finished transaction in 0.054 secs (0.052u,0.s) (successful)         Time Define
 Finished transaction in 14.39 secs (14.283u,0.108s) (successful)     Time End IndexedImpl.
 ```
 
+In Coq 8.4pl6 using `lazy`:
+```
+Finished transaction in 0. secs (0.u,0.s)                  Time start sharpening ADT.
+Finished transaction in 11. secs (10.388u,0.012s)          Time start honing parser using indexed representation.
+Finished transaction in 1. secs (1.296u,0.012s)            Time hone method "splits".
+Finished transaction in 28. secs (28.156u,0.016s)          Time simplify parser splitter.
+Finished transaction in 677. secs (676.072u,0.22s)         Time rewrite_disjoint_search_for.
+Finished transaction in 158. secs (158.248u,0.048s)        Time rewrite_disjoint_rev_search_for.
+Finished transaction in 926. secs (925.812u,0.236s)        Time progress repeat refine_binop_table.
+Finished transaction in 29. secs (28.532u,0.s)             Time simplify parser splitter.
+Finished transaction in 1. secs (1.836u,0.s)               Time finish honing parser method.
+Finished transaction in 1. secs (0.0840000000001u,0.s)     Time finish_Sharpening_SplitterADT.
+Finished transaction in 1242. secs (1241.476u,0.356s)      Time Defined.
+Finished transaction in 17. secs (17.072u,0.088s)          Time make_simplified_splitter ComputationalSplitter'.
+Finished transaction in 0. secs (0.0719999999997u,0.004s)  Time Defined.
+Finished transaction in 31. secs (31.164u,0.028s)          Time End IndexedImpl.
+```
+
 So something performance-tuned for Coq 8.4 can be much slower in Coq
 8.5.  (I suspect part of it is that `set (x := y)` is about 50x slower
 than it needs to be in Coq 8.4, but is about 4x faster than the

@@ -16,8 +16,8 @@ code.  This is why there are two invocations of `make` for Coq 8.5.
 
 The relevant issues are:
 
-- `Defined.` sometimes takes 2 minutes ([bug
-  #4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643))
+- `Defined.` sometimes takes 2 minutes 
+  ([bug #4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643))
 
   . This is the `Time Definition ComputationalSplitter' ...` in
     [`src/Parsers/Refinement/SlowEndSection.v`](./src/Parsers/Refinement/SlowEndSection.v).
@@ -38,8 +38,8 @@ The relevant issues are:
 
 - `End Section` can take 30 seconds, even though there are no section
   variables, no tactics, no notations, no `Let`s, and only one or two
-  `Definition`s ([bug
-  #4640](https://coq.inria.fr/bugs/show_bug.cgi?id=4640))
+  `Definition`s
+  ([bug #4640](https://coq.inria.fr/bugs/show_bug.cgi?id=4640))
 
   . This is `Time End IndexedImpl.` in
     [`src/Parsers/Refinement/SlowEndSection.v`](./src/Parsers/Refinement/SlowEndSection.v)

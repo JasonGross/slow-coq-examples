@@ -73,10 +73,12 @@
 ./src/Parsers/Refinement/Tactics.v
 ./src/Parsers/Refinement/SharpenedJSONDebug.v
 ./src/Parsers/Refinement/ReductionTactics.v
+./src/Parsers/Refinement/SharpenedJSONCBV.v
 ./src/Parsers/Refinement/FinishingLemma.v
 ./src/Parsers/Refinement/PreTactics.v
 ./src/Parsers/Refinement/FixedLengthLemmas.v
 ./src/Parsers/Refinement/DisjointRules.v
+./src/Parsers/Refinement/SharpenedJSONLazy.v
 ./src/Parsers/Refinement/IndexedAndAtMostOneNonTerminalReflectiveOpt.v
 ./src/Parsers/Refinement/SharpenedExpressionPlusParen.v
 ./src/Parsers/Refinement/IndexedAndAtMostOneNonTerminalReflective.v

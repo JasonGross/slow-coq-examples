@@ -81,7 +81,7 @@ Some examples of Coq being really slow:
   examples of slowness themselves take 20 minutes to compile.)
 
 - [Bug #4639](https://coq.inria.fr/bugs/show_bug.cgi?id=4639) -
-  running `simpl @snd` can take over three hours - see
+  running `simpl @snd` can take over 158 hours - see
   [`slow_fiat_simpl_example/README.md`](./slow_fiat_simpl_example/README.md)
 
 - [Bug #4657](https://coq.inria.fr/bugs/show_bug.cgi?id=4657) -

@@ -89,6 +89,12 @@ Some examples of Coq being really slow:
   when it solves an equivalent equation in 0.06 s) - see
   [`slow_omega.v`](./slow_omega.v)
 
+- [Bug #4810](https://coq.inria.fr/bugs/show_bug.cgi?id=4810) - if the
+  type of the field is a projection from a record, then the
+  performance of `field_simplify_eq` is linear in the *number of
+  record fields of that record*, which is absurd, given that the
+  fields of the record shouldn't matter.
+
 - [Bug #4187](https://coq.inria.fr/bugs/show_bug.cgi?id=4187) -
   `admit` is slow on a goal of the form `G' -> Prop` when it's fast on
   a goal of the form `G'` - see [`slow_admit.v`](./slow_admit.v)

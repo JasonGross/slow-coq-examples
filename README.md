@@ -38,6 +38,14 @@ Some examples of Coq being really slow:
   for Coq 8.5, unless you want to use `coqtop -emacs -time <
   interactive_hidden_slowness.v`)
 
+- [Bug #4819](https://coq.inria.fr/bugs/show_bug.cgi?id=4819) -
+  interactive time is impacted by large terms that don't exist anymore
+  in the goal -
+  [`interactive_proof_state_slowness.v`](./interactive_proof_state_slowness.v)
+  ([`interactive_proof_state_slowness.sh`](./interactive_proof_state_slowness.sh)
+  for Coq 8.5, unless you want to use `coqtop -emacs -time <
+  interactive_proof_state_slowness.v`)
+
 - [Bug #4662](https://coq.inria.fr/bugs/show_bug.cgi?id=4662) -
   `unfold ... in ...` should insert a cast annotation, else `Defined`
   can take over 6 minutes when it doesn't need to - see

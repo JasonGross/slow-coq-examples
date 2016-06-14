@@ -27,9 +27,9 @@ Section IndexedImpl.
 
     Time hone method "splits".
     {
-      (*Start Profiling.*)
+      (*Set Ltac Profiling.*)
       Time simplify parser splitter.
-      (*Show Profile.*)
+      (*Show Ltac Profile.*)
       (*
 total time:      0.712s
 
@@ -65,9 +65,9 @@ total time:      0.712s
  ├─eapply (refine_opt2_fold_right r_o re  26.4%  26.4%       1    0.188s
  └─autounfold  with parser_sharpen_db --   6.2%   6.2%       6    0.012s
  *)
-      Start Profiling.
+      Set Ltac Profiling.
       Time refine_binop_table.
-      Show Profile.
+      Show Ltac Profile.
       (* with [pose; change]:
 total time:     70.236s
 

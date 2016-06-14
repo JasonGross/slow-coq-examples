@@ -54,7 +54,7 @@ Section IndexedImpl.
 
     Time start sharpening ADT.
 
-    Start Profiling.
+    Set Ltac Profiling.
     Time let G := match goal with |- Sharpened (string_spec ?G _) => G end in
     let G := match G with
              | _ => (eval cbv delta [G] in G)
@@ -68,17 +68,17 @@ Section IndexedImpl.
     let H := fresh in
     let H' := fresh in
     pose v as H; pose v' as H'; cbv beta in H, H'. (* 134 s *)
-    Show Profile.
+    Show Ltac Profile.
 
-    Start Profiling.
+    Set Ltac Profiling.
     Time start honing parser using indexed representation.
-    Show Profile.
+    Show Ltac Profile.
 
-    Start Profiling.
+    Set Ltac Profiling.
     Time hone method "splits".
-    Show Profile.
+    Show Ltac Profile.
     {
-      Start Profiling.
+      Set Ltac Profiling.
       Time progress simplify with monad laws.
       Time lazymatch goal with
           | [ |- refine (x0 <- (opt2.fold_right
@@ -94,9 +94,9 @@ Section IndexedImpl.
       Time try (simple eapply lem; fail).
       Time cbv [make_tower] in lem.
       Time simple eapply lem.
-      Show Profile.
+      Show Ltac Profile.
 (*
-      { Start Profiling.
+      { Set Ltac Profiling.
         rewrite_disjoint_search_for.
         unfold DisjointLemmas.possible_characters.
         setoid_rewrite_ascii_mem.
@@ -131,7 +131,7 @@ Section IndexedImpl.
       { Time rewrite_disjoint_search_for; reflexivity. }
 
       simplify parser splitter.
-      Show Profile.
+      Show Ltac Profile.
       (*
 total time:     84.328s
 
@@ -185,9 +185,9 @@ total time:     84.328s
   Lemma ComputationalSplitter
   : FullySharpened (string_spec json'_grammar string_stringlike).
   Proof.
-    Start Profiling.
+    Set Ltac Profiling.
     Time make_simplified_splitter ComputationalSplitter'. (* 19 s *)
-    Show Profile.
+    Show Ltac Profile.
   Time Defined.
 
 Time End IndexedImpl.
@@ -199,9 +199,9 @@ Require Export Fiat.Parsers.StringLike.OcamlString.
 
 Definition json_parser (str : Coq.Strings.String.string) : bool.
 Proof.
-  Start Profiling.
+  Set Ltac Profiling.
   Time make_parser (@ComputationalSplitter(* _ String.string_stringlike _ _*)). (* 75 seconds *)
-  Show Profile.
+  Show Ltac Profile.
 Time Defined.
 
 (*Definition json_parser_ocaml (str : Ocaml.Ocaml.string) : bool.

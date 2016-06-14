@@ -109,9 +109,9 @@ Section correctness.
     unfold parse_nonterminal_reified, Syntactify.syntactify_rproductions,
     Syntactify.syntactify_prod, Syntactify.syntactify_string, Syntactify.syntactify_ritem_ascii;
       constructor.
-    (*Start Profiling.*)
+    (*Set Ltac Profiling.*)
     repeat build_term_equiv_step.
-    (*Show Profile.*)
+    (*Show Ltac Profile.*)
     (* total time:     25.328s
 
  tactic                                    self  total   calls       max

@@ -16,7 +16,7 @@ Require Export Fiat.Parsers.StringLike.OcamlString.
 
 Definition json_parser (str : Coq.Strings.String.string) : bool.
 Proof.
-  (*Start Profiling.*)
+  (*Set Ltac Profiling.*)
   Time let splitter := constr:(@ComputationalSplitter(* _ String.string_stringlike _ _*)) in
            (idtac;
   let str := match goal with
@@ -90,7 +90,7 @@ Proof.
   pose b').
 
   (*Time make_parser (@ComputationalSplitter(* _ String.string_stringlike _ _*)).*)
-  Show Profile.
+  Show Ltac Profile.
 Time Defined.
 
 (*Definition json_parser_ocaml (str : Ocaml.Ocaml.string) : bool.
@@ -106,7 +106,7 @@ Recursive Extraction json_parser(*_ocaml*).
 
 Definition json_parser (str : Coq.Strings.String.string) : bool.
 Proof.
-  Start Profiling.
+  Set Ltac Profiling.
   Time let splitter := constr:(@ComputationalSplitter(* _ String.string_stringlike _ _*)) in
        (idtac;
   let str := match goal with
@@ -193,7 +193,7 @@ Set Printing All.
 Print getcMethDef.
 
   Time make_parser (@ComputationalSplitter(* _ String.string_stringlike _ _*)).
-  Show Profile.
+  Show Ltac Profile.
 Time Defined.
 
 (*Definition json_parser_ocaml (str : Ocaml.Ocaml.string) : bool.

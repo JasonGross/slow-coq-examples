@@ -11,7 +11,7 @@ Require Fiat.Parsers.Refinement.SharpenedJSON.
 Lemma ComputationalSplitter
   : FullySharpened (string_spec json'_grammar string_stringlike).
 Proof.
-  (*Start Profiling.*)
+  (*Set Ltac Profiling.*)
   Time let splitter := constr:(SharpenedJSON.ComputationalSplitter') in
   idtac;
   let term := constr:(projT1 splitter) in
@@ -29,5 +29,5 @@ Proof.
   let impl := (eval cbv [term0] in term0) in
   refine (existT _ impl _);
   abstract (exact (projT2 splitter)).
-  (*Show Profile.*)
+  (*Show Ltac Profile.*)
 Time Defined.

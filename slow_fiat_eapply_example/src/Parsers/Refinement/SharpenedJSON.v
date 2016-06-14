@@ -29,6 +29,56 @@ Section IndexedImpl.
     Show Ltac Profile.
     {
       Set Ltac Profiling.
+      Time progress simplify with monad laws. (* 2.3 *)
+      Time lazymatch goal with
+          | [ |- refine (x0 <- (opt2.fold_right
+                                  (fun a a0 => If @?test a Then @?test_true a Else a0)
+                                  ?base
+                                  ?ls);
+                         (@?r_o x0))
+                        ?retv ]
+            => pose proof (@refine_opt2_fold_right _ r_o retv test test_true base ls) as lem
+           end. (* 1.47 *)
+      Time eapply lem. (* 57.181 s in 8.5, about 12 s in 8.4 *)
+      Undo.
+      Time simple eapply lem. (* 63.9 s *)
+      Undo.
+      Time cbv [make_tower] in lem. (* 0.24 s *)
+      Time simple eapply lem. (* 3.213 s *)
+      Undo.
+      Ltac thing lem :=
+        let T := type of lem in
+        match T with
+        | forall v : Comp ?V, @?F v -> _
+          => let v' := fresh in
+             evar (v' : Comp V);
+             let v'' := (eval cbv [v'] in v') in
+             clear v';
+             specialize (lem v'');
+             let H := fresh in
+             cut (F v'');
+             [ intro H; specialize (lem H); clear H (*;thing lem *)
+             | ]
+        | _ => idtac
+        end.
+      Reset Ltac Profile.
+      Time thing lem. (* 2.476 s *)
+      Show Ltac Profile.
+(*
+total time:      1.736s
+
+ tactic                                    self  total   calls       max
+────────────────────────────────────────┴──────┴──────┴───────┴─────────┘
+─cut -----------------------------------  73.0%  73.0%       1    1.268s
+─clear H -------------------------------  22.6%  22.6%       1    0.392s
+─clear v' ------------------------------   4.4%   4.4%       1    0.076s
+
+ tactic                                    self  total   calls       max
+────────────────────────────────────────┴──────┴──────┴───────┴─────────┘
+─cut -----------------------------------  73.0%  73.0%       1    1.268s
+─clear H -------------------------------  22.6%  22.6%       1    0.392s
+─clear v' ------------------------------   4.4%   4.4%       1    0.076s
+ *)
       Time simplify parser splitter.
       { Time rewrite_disjoint_search_for; reflexivity. }
       { Time rewrite_disjoint_search_for; reflexivity. }

@@ -70,16 +70,17 @@ Section IndexedImpl.
     pose v as H; pose v' as H'; cbv beta in H, H'. (* 134 s *)
     Show Ltac Profile.
 
-    Set Ltac Profiling.
+    Reset Ltac Profile.
     Time start honing parser using indexed representation.
     Show Ltac Profile.
 
-    Set Ltac Profiling.
+    Reset Ltac Profile.
     Time hone method "splits".
     Show Ltac Profile.
     {
-      Set Ltac Profiling.
+      Reset Ltac Profile.
       Time progress simplify with monad laws.
+      Show Ltac Profile.
       Time lazymatch goal with
           | [ |- refine (x0 <- (opt2.fold_right
                                   (fun a a0 => If @?test a Then @?test_true a Else a0)
@@ -89,6 +90,42 @@ Section IndexedImpl.
                         ?retv ]
             => pose proof (@refine_opt2_fold_right _ r_o retv test test_true base ls) as lem
            end.
+      Ltac thing lem :=
+        let T := type of lem in
+        match T with
+        | forall v : Comp ?V, @?F v -> _
+          => let v' := fresh in
+             evar (v' : Comp V);
+             let v'' := (eval cbv [v'] in v') in
+             clear v';
+             specialize (lem v'');
+             let H := fresh in
+             cut (F v'');
+             [ intro H; specialize (lem H); clear H (*; thing lem *)
+             | ]
+        | _ => idtac
+        end.
+      Reset Ltac Profile.
+      Time try (cbv [make_tower] in lem; thing lem; fail). (* 64.259 secs (49.14u,15.112s) *)
+      Show Ltac Profile.
+(*
+total time:     16.560s
+
+ tactic                                    self  total   calls       max
+────────────────────────────────────────┴──────┴──────┴───────┴─────────┘
+─cbv[make_tower] in lem ----------------  42.5%  42.5%       1    7.040s
+─cut -----------------------------------  26.6%  26.6%       1    4.404s
+─clear v' ------------------------------  15.7%  15.7%       1    2.604s
+─clear H -------------------------------  15.1%  15.1%       1    2.508s
+
+ tactic                                    self  total   calls       max
+────────────────────────────────────────┴──────┴──────┴───────┴─────────┘
+─cbv[make_tower] in lem ----------------  42.5%  42.5%       1    7.040s
+─cut -----------------------------------  26.6%  26.6%       1    4.404s
+─clear v' ------------------------------  15.7%  15.7%       1    2.604s
+─clear H -------------------------------  15.1%  15.1%       1    2.508s
+ *)
+      Undo.
       Time eapply lem.
       Undo.
       Time try (simple eapply lem; fail).

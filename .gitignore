@@ -9,3 +9,5 @@
 /slow_fiat_examples/Makefile
 /slow_fiat_simpl_example/_CoqProject
 /slow_fiat_simpl_example/Makefile
+/slow_fiat_eapply_example/_CoqProject
+/slow_fiat_eapply_example/Makefile

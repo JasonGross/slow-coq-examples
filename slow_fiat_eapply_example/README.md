@@ -13,7 +13,10 @@ cp _CoqProject{.v85,} && coq_makefile -f _CoqProject -o Makefile && make TIMED=1
 The relevant issues are:
 
 - `simple eapply` can take 2 hours
-  [src/Parsers/Refinement/SharpenedJavaScriptAssignmentExpression.v](./src/Parsers/Refinement/SharpenedJavaScriptAssignmentExpression.v)
+  [`src/Parsers/Refinement/SharpenedJavaScriptAssignmentExpression.v`](./src/Parsers/Refinement/SharpenedJavaScriptAssignmentExpression.v)
+  and
+  [`src/Parsers/Refinement/SharpenedJSON.v`](./src/Parsers/Refinement/SharpenedJSON.v)
+  ([bug #4821](https://coq.inria.fr/bugs/show_bug.cgi?id=4821))
 
 
 

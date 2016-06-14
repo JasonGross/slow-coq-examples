@@ -74,6 +74,11 @@ Some examples of Coq being really slow:
   [bug #4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779) in the next
   bullet.)
 
+
+- [Bug #4821](https://coq.inria.fr/bugs/show_bug.cgi?id=4821) -
+  `simple eapply` can take 2 hours - see
+  [`slow_fiat_eapply_example/src/Parsers/Refinement/SharpenedJavaScriptAssignmentExpression.v`](./slow_fiat_eapply_example/src/Parsers/Refinement/SharpenedJavaScriptAssignmentExpression.v)
+
 - Bugs [#4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643)
   [#4640](https://coq.inria.fr/bugs/show_bug.cgi?id=4640),
   [#4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642), and

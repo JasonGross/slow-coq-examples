@@ -144,6 +144,10 @@ Proof.
 Defined.
 ```
 
+- [Bug #5038](https://coq.inria.fr/bugs/show_bug.cgi?id=5038) -
+  `Definition` does head-zeta-reduction.  See
+  [`slow_lets.v`](./slow_lets.v) for an example of exponential
+  behavior.
 
 ## Already fixed or partially fixed issues:
 

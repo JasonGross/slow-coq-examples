@@ -1,0 +1,27 @@
+-R src Crypto
+src/Reflection/CountLets.v
+src/Reflection/Named/Compile.v
+src/Reflection/Named/ContextOn.v
+src/Reflection/Named/DeadCodeElimination.v
+src/Reflection/Named/EstablishLiveness.v
+src/Reflection/Named/NameUtil.v
+src/Reflection/Named/RegisterAssign.v
+src/Reflection/Named/Syntax.v
+src/Reflection/Syntax.v
+src/Specific/FancyMachine256/Barrett.v
+src/Specific/FancyMachine256/Core.v
+src/Tactics/VerdiTactics.v
+src/Util/Decidable.v
+src/Util/Equality.v
+src/Util/FixCoqMistakes.v
+src/Util/GlobalSettings.v
+src/Util/HProp.v
+src/Util/Isomorphism.v
+src/Util/LetIn.v
+src/Util/ListUtil.v
+src/Util/NatUtil.v
+src/Util/Notations.v
+src/Util/PointedProp.v
+src/Util/Sigma.v
+src/Util/Tactics.v
+src/Util/Tuple.v

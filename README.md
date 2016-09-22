@@ -149,6 +149,12 @@ Defined.
   [`slow_lets.v`](./slow_lets.v) for an example of exponential
   behavior.
 
+- [Bug #5096](https://coq.inria.fr/bugs/show_bug.cgi?id=5096) -
+  `vm_compute` is exponentially slower than `native_compute`, `lazy`,
+  and `compute`.  See
+  [`slow_fiat_crypto_vm_compute/README.md`](./slow_fiat_crypto_vm_compute/README.md)
+  for more details and instructions on running.
+
 ## Already fixed or partially fixed issues:
 
 - [Bug #4537](https://coq.inria.fr/bugs/show_bug.cgi?id=4537) - Coq

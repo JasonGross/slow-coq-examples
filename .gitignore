@@ -11,3 +11,10 @@
 /slow_fiat_simpl_example/Makefile
 /slow_fiat_eapply_example/_CoqProject
 /slow_fiat_eapply_example/Makefile
+/slow_fiat_crypto_vm_compute/Makefile.coq
+.lia.cache
+.nia.cache
+.nlia.cache
+lia.cache
+nia.cache
+nlia.cache

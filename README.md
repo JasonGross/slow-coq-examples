@@ -16,9 +16,15 @@ about reporting bugs and performance regressions.
 
 Some examples of Coq being really slow:
 
+- [Bug #5148](https://coq.inria.fr/bugs/show_bug.cgi?id=5148) - Ltac
+  reification of moderate sized terms can take over 90 hours - see
+  [`slow_fiat_crypto_reify/README.md`](./slow_fiat_crypto_reify/README.md)
+  for more details.
+
 - [Bug #5146](https://coq.inria.fr/bugs/show_bug.cgi?id=5146) -
   `nsatz` can sometimes spend 10 minutes or more in reification - see
   [`slow_nsatz.v`](./slow_nsatz.v).
+
 - [Bug #3441](https://coq.inria.fr/bugs/show_bug.cgi?id=3441) - `pose
   proof H as k` is sometimes an order of magnitude slower than `pose H
   as k; clearbody k` - see [`slow_pose_proof.v`](./slow_pose_proof.v)

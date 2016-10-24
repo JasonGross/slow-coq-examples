@@ -1,6 +1,7 @@
 Require Import Coq.ZArith.ZArith.
 Require Import Crypto.Specific.X86.Core.
 Require Import Crypto.BoundedArithmetic.Interface.
+Require Import Crypto.Util.GlobalSettings Crypto.Util.FixCoqMistakes.
 
 Local Coercion Z.of_nat : nat >-> Z.
 

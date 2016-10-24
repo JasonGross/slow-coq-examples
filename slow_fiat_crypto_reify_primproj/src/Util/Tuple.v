@@ -19,7 +19,7 @@ Definition tuple T n : Type :=
 Fixpoint to_list' {T} (n:nat) {struct n} : tuple' T n -> list T :=
   match n with
   | 0 => fun x => (x::nil)%list
-  | S n' => fun xs : tuple' T (S n') => let (xs', x) := xs in (x :: to_list' n' xs')%list
+  | S n' => fun xs : tuple' T (S n') => (snd xs :: to_list' n' (fst xs))%list
   end.
 
 Definition to_list {T} (n:nat) : tuple T n -> list T :=
@@ -252,13 +252,13 @@ Proof.
   + cbv [fieldwise]. auto.
   + destruct n; cbv [tuple to_list fieldwise] in *.
     - cbv [to_list']; auto.
-    - simpl in *. destruct s,t; cbv [fst snd] in *.
+    - simpl in *.
       constructor; intuition auto.
       apply IHn; auto.
   + destruct n; cbv [tuple to_list fieldwise] in *.
     - cbv [fieldwise']; auto.
       cbv [to_list'] in *; inversion H; auto.
-    - simpl in *. destruct s,t; cbv [fst snd] in *.
+    - simpl in *.
       inversion H; subst.
       split; try assumption.
       apply IHn; auto.

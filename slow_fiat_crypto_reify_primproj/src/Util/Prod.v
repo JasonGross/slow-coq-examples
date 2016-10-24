@@ -6,13 +6,55 @@
     a systematic way of reducing such equalities to equalities at
     simpler types. *)
 Require Import Crypto.Util.Equality.
-Require Import Crypto.Util.GlobalSettings.
+Require Export Crypto.Util.GlobalSettings.
+Require Export Crypto.Util.FixCoqMistakes.
 
 Local Arguments fst {_ _} _.
 Local Arguments snd {_ _} _.
 Local Arguments f_equal {_ _} _ {_ _} _.
 
-Scheme Equality for prod.
+(*Scheme Equality for Datatypes.prod.*)
+
+Definition prod_beq (A B : Type) (eq_A : A -> A -> bool) (eq_B : B -> B -> bool) (X Y : A * B) : bool
+  := (eq_A (fst X) (fst Y) && eq_B (snd X) (snd Y))%bool.
+
+Lemma internal_prod_dec_bl
+      (A B : Type) (eq_A : A -> A -> bool) (eq_B : B -> B -> bool) (A_bl : forall x y : A, eq_A x y = true -> x = y)
+      (B_bl : forall x y : B, eq_B x y = true -> x = y) (x y : A * B)
+  : prod_beq A B eq_A eq_B x y = true -> x = y.
+Proof.
+  unfold prod_beq.
+  specialize (A_bl (fst x) (fst y)).
+  specialize (B_bl (snd x) (snd y)).
+  edestruct eq_A, eq_B; simpl; try reflexivity; try discriminate.
+  destruct x, y; simpl in *; destruct A_bl, B_bl; reflexivity.
+Defined.
+
+Lemma internal_prod_dec_lb
+      (A B : Type) (eq_A : A -> A -> bool) (eq_B : B -> B -> bool) (A_lb : forall x y : A, x = y -> eq_A x y = true)
+      (B_lb : forall x y : B, x = y -> eq_B x y = true) (x y : A * B)
+  : x = y -> prod_beq A B eq_A eq_B x y = true.
+Proof.
+  unfold prod_beq.
+  intro; subst y.
+  rewrite A_lb, B_lb by reflexivity; reflexivity.
+Defined.
+
+Definition prod_eq_dec
+           (A B : Type) (eq_A : A -> A -> bool) (eq_B : B -> B -> bool) (A_bl : forall x y : A, eq_A x y = true -> x = y)
+           (B_bl : forall x y : B, eq_B x y = true -> x = y) (A_lb : forall x y : A, x = y -> eq_A x y = true)
+           (B_lb : forall x y : B, x = y -> eq_B x y = true) (x y : A * B)
+  : { x = y } + { x <> y }.
+Proof.
+  destruct (prod_beq A B eq_A eq_B x y) eqn:H; [ left | right ].
+  { eauto using internal_prod_dec_bl. }
+  { intro; subst y.
+    rewrite internal_prod_dec_lb in H by auto.
+    discriminate. }
+Defined.
+
+Definition surjective_pairing : forall {A B : Type} (p : A * B), p = (fst p, snd p)
+  := fun _ _ _ => eq_refl.
 
 (** ** Equality for [prod] *)
 Section prod.

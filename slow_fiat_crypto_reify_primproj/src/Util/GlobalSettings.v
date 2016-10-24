@@ -7,7 +7,16 @@ Global Set Asymmetric Patterns.
 
 (** Consider also: *)
 (** Judgmental η for records, faster projections *)
-(** Set Primitive Projections. *)
+Global Set Primitive Projections.
+
+(** Primitive [prod] *)
+Record prod A B := pair { fst : A ; snd : B }.
+Arguments pair {A B} _ _.
+Arguments snd {A B} _.
+Arguments fst {A B} _.
+Add Printing Let prod.
+Notation "x * y" := (prod x y) : type_scope.
+Notation "( x , y , .. , z )" := (pair .. (pair x y) .. z) : core_scope.
 
 (** Don't use non-imported hints *)
 (** Set Loose Hint Behavior "Strict". *)

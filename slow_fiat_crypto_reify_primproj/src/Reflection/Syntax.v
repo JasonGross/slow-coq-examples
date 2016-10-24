@@ -3,6 +3,7 @@ Require Import Coq.Strings.String Coq.Classes.RelationClasses.
 Require Import Crypto.Util.Tuple.
 Require Import Crypto.Util.Tactics.
 Require Import Crypto.Util.Notations.
+Require Import Crypto.Util.GlobalSettings Crypto.Util.FixCoqMistakes.
 
 (** We parameterize the language over a type of basic type codes (for
     things like [Z], [word], [bool]), as well as a type of n-ary

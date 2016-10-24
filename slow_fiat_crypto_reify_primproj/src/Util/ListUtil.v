@@ -28,19 +28,6 @@ Create HintDb pull_update_nth discriminated.
 Create HintDb push_update_nth discriminated.
 Create HintDb znonzero discriminated.
 
-Hint Rewrite
-  @app_length
-  @rev_length
-  @map_length
-  @seq_length
-  @fold_left_length
-  @split_length_l
-  @split_length_r
-  @firstn_length
-  @combine_length
-  @prod_length
-  : distr_length.
-
 Hint Extern 1 => progress autorewrite with distr_length in * : distr_length.
 Ltac distr_length := autorewrite with distr_length in *;
   try solve [simpl in *; omega].
@@ -117,6 +104,188 @@ Module Export List.
     Qed.
 
   End Repeat.
+
+  (******************************************************)
+  (** ** Operations on lists of pairs or lists of lists *)
+  (******************************************************)
+
+  Section ListPairs.
+    Variables (A : Type) (B : Type).
+
+  (** [split] derives two lists from a list of pairs *)
+
+    Fixpoint split (l:list (A*B)) : list A * list B :=
+      match l with
+	| [] => ([], [])
+	| (x,y) :: tl => let (left,right) := split tl in (x::left, y::right)
+      end.
+
+    Lemma in_split_l : forall (l:list (A*B))(p:A*B),
+      In p l -> In (fst p) (fst (split l)).
+    Proof.
+      induction l; simpl; intros; auto.
+      destruct p; destruct a; destruct (split l); simpl in *.
+      destruct H.
+      injection H; auto.
+      right; apply (IHl (_,_) H).
+    Qed.
+
+    Lemma in_split_r : forall (l:list (A*B))(p:A*B),
+      In p l -> In (snd p) (snd (split l)).
+    Proof.
+      induction l; simpl; intros; auto.
+      destruct p; destruct a; destruct (split l); simpl in *.
+      destruct H.
+      injection H; auto.
+      right; apply (IHl (_,_) H).
+    Qed.
+
+    Lemma split_nth : forall (l:list (A*B))(n:nat)(d:A*B),
+      nth n l d = (nth n (fst (split l)) (fst d), nth n (snd (split l)) (snd d)).
+    Proof.
+      induction l.
+      destruct n; destruct d; simpl; auto.
+      destruct n; destruct d; simpl; auto.
+      destruct a; destruct (split l); simpl; auto.
+      destruct (split l); simpl in *; auto.
+      apply IHl.
+    Qed.
+
+    Lemma split_length_l : forall (l:list (A*B)),
+      length (fst (split l)) = length l.
+    Proof.
+      induction l; simpl; auto.
+    Qed.
+
+    Lemma split_length_r : forall (l:list (A*B)),
+      length (snd (split l)) = length l.
+    Proof.
+      induction l; simpl; auto.
+    Qed.
+
+  (** [combine] is the opposite of [split].
+      Lists given to [combine] are meant to be of same length.
+      If not, [combine] stops on the shorter list *)
+
+    Fixpoint combine (l : list A) (l' : list B) : list (A*B) :=
+      match l,l' with
+	| x::tl, y::tl' => (x,y)::(combine tl tl')
+	| _, _ => nil
+      end.
+
+    Lemma split_combine : forall (l: list (A*B)),
+      let (l1,l2) := split l in combine l1 l2 = l.
+    Proof.
+      induction l.
+      simpl; auto.
+      destruct a; simpl.
+      destruct (split l); simpl in *.
+      f_equal; auto.
+    Qed.
+
+    Lemma combine_split : forall (l:list A)(l':list B), length l = length l' ->
+      split (combine l l') = (l,l').
+    Proof.
+      induction l, l'; simpl; trivial; try discriminate.
+      now intros [= ->%IHl].
+    Qed.
+
+    Lemma in_combine_l : forall (l:list A)(l':list B)(x:A)(y:B),
+      In (x,y) (combine l l') -> In x l.
+    Proof.
+      induction l.
+      simpl; auto.
+      destruct l'; simpl; auto; intros.
+      contradiction.
+      destruct H.
+      injection H; auto.
+      right; apply IHl with l' y; auto.
+    Qed.
+
+    Lemma in_combine_r : forall (l:list A)(l':list B)(x:A)(y:B),
+      In (x,y) (combine l l') -> In y l'.
+    Proof.
+      induction l.
+      simpl; intros; contradiction.
+      destruct l'; simpl; auto; intros.
+      destruct H.
+      injection H; auto.
+      right; apply IHl with x; auto.
+    Qed.
+
+    Lemma combine_length : forall (l:list A)(l':list B),
+      length (combine l l') = min (length l) (length l').
+    Proof.
+      induction l.
+      simpl; auto.
+      destruct l'; simpl; auto.
+    Qed.
+
+    Lemma combine_nth : forall (l:list A)(l':list B)(n:nat)(x:A)(y:B),
+      length l = length l' ->
+      nth n (combine l l') (x,y) = (nth n l x, nth n l' y).
+    Proof.
+      induction l; destruct l'; intros; try discriminate.
+      destruct n; simpl; auto.
+      destruct n; simpl in *; auto.
+    Qed.
+
+  (** [list_prod] has the same signature as [combine], but unlike
+     [combine], it adds every possible pairs, not only those at the
+     same position. *)
+
+    Fixpoint list_prod (l:list A) (l':list B) :
+      list (A * B) :=
+      match l with
+	| nil => nil
+	| cons x t => (map (fun y:B => (x, y)) l')++(list_prod t l')
+      end.
+
+    Lemma in_prod_aux :
+      forall (x:A) (y:B) (l:list B),
+	In y l -> In (x, y) (map (fun y0:B => (x, y0)) l).
+    Proof.
+      induction l;
+	[ simpl; auto
+	  | simpl; destruct 1 as [H1| ];
+	    [ left; rewrite H1; trivial | right; auto ] ].
+    Qed.
+
+    Lemma in_prod :
+      forall (l:list A) (l':list B) (x:A) (y:B),
+	In x l -> In y l' -> In (x, y) (list_prod l l').
+    Proof.
+      induction l;
+	[ simpl; tauto
+	  | simpl; intros; apply in_or_app; destruct H;
+	    [ left; rewrite H; apply in_prod_aux; assumption | right; auto ] ].
+    Qed.
+
+    Lemma in_prod_iff :
+      forall (l:list A)(l':list B)(x:A)(y:B),
+	In (x,y) (list_prod l l') <-> In x l /\ In y l'.
+    Proof.
+      split; [ | intros; apply in_prod; intuition ].
+      induction l; simpl; intros.
+      intuition.
+      destruct (in_app_or _ _ _ H); clear H.
+      destruct (in_map_iff (fun y : B => (a, y)) l' (x,y)) as (H1,_).
+      destruct (H1 H0) as (z,(H2,H3)); clear H0 H1.
+      injection H2 as -> ->; intuition.
+      intuition.
+    Qed.
+
+    Lemma prod_length : forall (l:list A)(l':list B),
+      length (list_prod l l') = (length l) * (length l').
+    Proof.
+      induction l; simpl; auto.
+      intros.
+      rewrite app_length.
+      rewrite map_length.
+      auto.
+    Qed.
+
+  End ListPairs.
 
   Section Cutting.
 
@@ -201,6 +370,19 @@ Module Export List.
   End Cutting.
 
 End List.
+
+Hint Rewrite
+  @app_length
+  @rev_length
+  @map_length
+  @seq_length
+  @fold_left_length
+  @split_length_l
+  @split_length_r
+  @firstn_length
+  @combine_length
+  @prod_length
+  : distr_length.
 
 Hint Rewrite @firstn_skipn : simpl_firstn.
 Hint Rewrite @firstn_skipn : simpl_skipn.

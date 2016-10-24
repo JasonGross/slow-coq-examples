@@ -1,0 +1,27 @@
+-R src Crypto
+src/BoundedArithmetic/Interface.v
+src/Reflection/Inline.v
+src/Reflection/InputSyntax.v
+src/Reflection/InterpProofs.v
+src/Reflection/Linearize.v
+src/Reflection/Reify.v
+src/Reflection/Syntax.v
+src/Reflection/WfProofs.v
+src/Specific/X86/Core.v
+src/Specific/X86/Exponent25519.v
+src/Tactics/VerdiTactics.v
+src/Util/AutoRewrite.v
+src/Util/Decidable.v
+src/Util/Equality.v
+src/Util/FixCoqMistakes.v
+src/Util/GlobalSettings.v
+src/Util/HProp.v
+src/Util/Isomorphism.v
+src/Util/ListUtil.v
+src/Util/NatUtil.v
+src/Util/Notations.v
+src/Util/Prod.v
+src/Util/Sigma.v
+src/Util/Tactics.v
+src/Util/Tuple.v
+src/Util/ZUtil.v

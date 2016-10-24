@@ -141,6 +141,10 @@ Ltac reifyf base_type_code interp_base_type op var e :=
     let v := reify_rec ev in
     let C := reify_rec eC in
     mkMatchPair t v C
+  | fst ?ev =>
+    reify_rec (let (x, _) := ev in x)
+  | snd ?ev =>
+    reify_rec (let (_, x) := ev in x)
   | ?x =>
     let t := lazymatch type of x with ?t => reify_type t end in
     let retv := match constr:(Set) with

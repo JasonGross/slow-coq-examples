@@ -2306,7 +2306,7 @@ let y2 :=
       (carry1, (zs0, z)) in
     (fst carry0_z, (zs, snd carry0_z)) in
   y3 in
-let CF_ :=
+let (CF, _) :=
   let xs_x0 := y2 in
   let xs := fst xs_x0 in
   let x0 := snd xs_x0 in
@@ -2344,7 +2344,6 @@ let CF_ :=
     let z := snd carry1_z in
     (carry1, (zs0, z)) in
   (fst carry0_z, (zs, snd carry0_z)) in
-let CF := fst CF_ in
 let _y3 :=
   let xs_x0 := y2 in
   let xs := fst xs_x0 in

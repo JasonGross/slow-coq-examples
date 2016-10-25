@@ -1040,7 +1040,7 @@ let y2 :=
       let xs := fst xs_x0 in
       let x0 := snd xs_x0 in
       let (ys, y2) :=
-        let (x1, _) :=
+        let x1_ :=
           let y2 :=
             let (_, y2) :=
               let y2 :=
@@ -2182,7 +2182,7 @@ let y2 :=
               (carry1, (zs0, z)) in
             (carry0, (zs, z)) in
           out0 in
-        x1 in
+        fst x1_ in
       let (carry, zs) :=
         let xs0_x1 := xs in
         let xs0 := fst xs0_x1 in
@@ -2290,7 +2290,7 @@ let y2 :=
       let carry0 := fst carry0_z in
       let z := snd carry0_z in
       (carry0, (zs, z)) in
-    let (carry0, z) :=
+    let carry0_z :=
       let xs0_x1 := x0 in
       let xs0 := fst xs0_x1 in
       let x1 := snd xs0_x1 in
@@ -2304,16 +2304,16 @@ let y2 :=
       let carry1 := fst carry1_z in
       let z := snd carry1_z in
       (carry1, (zs0, z)) in
-    (carry0, (zs, z)) in
+    (fst carry0_z, (zs, snd carry0_z)) in
   y3 in
-let (CF, _) :=
+let CF_ :=
   let xs_x0 := y2 in
   let xs := fst xs_x0 in
   let x0 := snd xs_x0 in
   let ys_y3 := y in
   let ys := fst ys_y3 in
   let y3 := snd ys_y3 in
-  let (carry, zs) :=
+  let carry_zs :=
     let xs0_x1 := xs in
     let xs0 := fst xs0_x1 in
     let x1 := snd xs0_x1 in
@@ -2327,7 +2327,9 @@ let (CF, _) :=
     let carry0 := fst carry0_z in
     let z := snd carry0_z in
     (carry0, (zs, z)) in
-  let (carry0, z) :=
+  let carry := fst carry_zs in
+  let zs := snd carry_zs in
+  let carry0_z :=
     let xs0_x1 := x0 in
     let xs0 := fst xs0_x1 in
     let x1 := snd xs0_x1 in
@@ -2341,12 +2343,13 @@ let (CF, _) :=
     let carry1 := fst carry1_z in
     let z := snd carry1_z in
     (carry1, (zs0, z)) in
-  (carry0, (zs, z)) in
-let (_, y3) :=
+  (fst carry0_z, (zs, snd carry0_z)) in
+let CF := fst CF_ in
+let _y3 :=
   let xs_x0 := y2 in
   let xs := fst xs_x0 in
   let x0 := snd xs_x0 in
-  let (ys, y3) :=
+  let ys_y3 :=
     let x1_x2 := y1 in
     let x1 := fst x1_x2 in
     let x2 := snd x1_x2 in
@@ -2368,8 +2371,10 @@ let (_, y3) :=
     let y5 := fst y5_y6 in
     let y6 := snd y5_y6 in
     (@selc (@x86.W (Z.of_nat 64) ops) (@x86.selc (Z.of_nat 64) ops) CF x3 y5,
-    @selc (@x86.W (Z.of_nat 64) ops) (@x86.selc (Z.of_nat 64) ops) CF x4 y6)) in
-  let (carry, zs) :=
+     @selc (@x86.W (Z.of_nat 64) ops) (@x86.selc (Z.of_nat 64) ops) CF x4 y6)) in
+  let ys := fst ys_y3 in
+  let y3 := snd ys_y3 in
+  let carry_zs :=
     let xs0_x1 := xs in
     let xs0 := fst xs0_x1 in
     let x1 := snd xs0_x1 in
@@ -2383,7 +2388,9 @@ let (_, y3) :=
     let carry0 := fst carry0_z in
     let z := snd carry0_z in
     (carry0, (zs, z)) in
-  let (carry0, z) :=
+  let carry := fst carry_zs in
+  let zs := snd carry_zs in
+  let carry0_z :=
     let xs0_x1 := x0 in
     let xs0 := fst xs0_x1 in
     let x1 := snd xs0_x1 in
@@ -2397,8 +2404,8 @@ let (_, y3) :=
     let carry1 := fst carry1_z in
     let z := snd carry1_z in
     (carry1, (zs0, z)) in
-  (carry0, (zs, z)) in
-y3.
+  (fst carry0_z, (zs, snd carry0_z)) in
+snd _y3.
 Definition rexpression : Syntax.Expr base_type (interp_base_type _) op (Arrow TW (Arrow TW (Arrow TW (Arrow TW (Arrow TW (Arrow TW (Arrow TW (Arrow TW (Tbase TW))))))))).
   Proof.
     Typeclasses eauto := debug.

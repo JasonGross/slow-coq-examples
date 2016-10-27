@@ -39,14 +39,6 @@ Some examples of Coq being really slow:
   Also, see this [graph of the time of tactics vs the size of
   goal](./evar-normalization-slowness/graph.svg)
 
-- [Bug #4777](https://coq.inria.fr/bugs/show_bug.cgi?id=4777) - unless
-  `Set Silent` is on, the printing time is impacted by large terms
-  that don't print - see
-  [`interactive_hidden_slowness.v`](./interactive_hidden_slowness.v)
-  ([`interactive_hidden_slowness.sh`](./interactive_hidden_slowness.sh)
-  for Coq 8.5, unless you want to use `coqtop -emacs -time <
-  interactive_hidden_slowness.v`)
-
 - [Bug #4819](https://coq.inria.fr/bugs/show_bug.cgi?id=4819) -
   interactive time is impacted by large terms that don't exist anymore
   in the goal -
@@ -68,39 +60,12 @@ Some examples of Coq being really slow:
   should be a way to terminate typeclass resolution early - see
   [`slow_failing_setoid_rewrite.v`](./slow_failing_setoid_rewrite.v)
 
-- [Bug #4669](https://coq.inria.fr/bugs/show_bug.cgi?id=4669) -
-  printing of dependent evars in ProofGeneral can slow emacs
-  interaction to a crawl (because printing of dependent evars in the
-  goal does not respect `Set Printing Width`) - see
-  [`slow_dependent_evars_in_pg.v`](./slow_dependent_evars_in_pg.v), and
-  make sure to let it set `coq-end-goals-regexp-show-subgoals` to
-  `nil` appropriately.
-
 - [Bug #4636](https://coq.inria.fr/bugs/show_bug.cgi?id=4636) - `set
   (x := y)` can be 100x slower than `pose y as x; change y with x` -
   see [`slow_set.v`](./slow_set.v).  (The reverse can also happen,
   where `change` is orders of magnitude slower than `set`.  See
   [bug #4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779) in the next
   bullet.)
-
-
-- [Bug #4821](https://coq.inria.fr/bugs/show_bug.cgi?id=4821) -
-  `simple eapply` can take 2 hours - see
-  [`slow_fiat_eapply_example/src/Parsers/Refinement/SharpenedJavaScriptAssignmentExpression.v`](./slow_fiat_eapply_example/src/Parsers/Refinement/SharpenedJavaScriptAssignmentExpression.v)
-
-- Bugs [#4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643)
-  [#4640](https://coq.inria.fr/bugs/show_bug.cgi?id=4640),
-  [#4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642), and
-  [#4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779): `Defined.`
-  sometimes takes 2 minutes; `End Section` can take 30 seconds, even
-  though there are no section variables, no tactics, no notations, no
-  `Let`s, and only one or two `Definition`s; `cbv [some identifiers]`
-  can run through 64 GB of RAM in 15 minutes; and `pose y as x; change
-  y with x in H` can be 1300x slower than `set (x := y) in H`;
-  respectively.  See
-  [`slow_fiat_examples/README.md`](./slow_fiat_examples/README.md) for
-  more details and instructions on running.  (Be warned, some of the
-  examples of slowness themselves take 20 minutes to compile.)
 
 - [Bug #4639](https://coq.inria.fr/bugs/show_bug.cgi?id=4639) -
   running `simpl @snd` can take over 158 hours - see
@@ -117,10 +82,6 @@ Some examples of Coq being really slow:
   record fields of that record*, which is absurd, given that the
   fields of the record shouldn't matter.
 
-- [Bug #4187](https://coq.inria.fr/bugs/show_bug.cgi?id=4187) -
-  `admit` is slow on a goal of the form `G' -> Prop` when it's fast on
-  a goal of the form `G'` - see [`slow_admit.v`](./slow_admit.v)
-
 - [Bug #3448](https://coq.inria.fr/bugs/show_bug.cgi?id=3448) - `Hint
   Extern (foo _) => ...` is significantly slower than `Hint Extern foo
   => ...`; typeclass resolution is slow at `intro` - see
@@ -130,6 +91,19 @@ Some examples of Coq being really slow:
   unification can be very slow - see
   [`slow_unification.v`](./slow_unification.v).  (Matthieu's
   explanation in the file.)
+
+- [Bug #5038](https://coq.inria.fr/bugs/show_bug.cgi?id=5038) -
+  `Definition` does head-zeta-reduction.  See
+  [`slow_lets.v`](./slow_lets.v) for an example of exponential
+  behavior.
+
+## Already fixed or partially fixed issues:
+
+- [Bug #5096](https://coq.inria.fr/bugs/show_bug.cgi?id=5096) -
+  `vm_compute` is exponentially slower than `native_compute`, `lazy`,
+  and `compute`.  See
+  [`slow_fiat_crypto_vm_compute/README.md`](./slow_fiat_crypto_vm_compute/README.md)
+  for more details and instructions on running.
 
 - [Bug #3450](https://coq.inria.fr/bugs/show_bug.cgi?id=3450) - `End
   foo.` is slower in trunk in some cases; it's also slower in batch
@@ -142,29 +116,21 @@ Some examples of Coq being really slow:
   defined, and you can watch the `<projection> is definted` messages
   appear one by one, very slowly.
 
-- [Bug #4625](https://coq.inria.fr/bugs/show_bug.cgi?id=4625) -
-  checking `Defined`/`Qed` causes coqtop to drop the most recent proof
-  state.  This makes it a pain to debug things like:
-```coq
-Definition foo : bar.
-Proof.
-  some_slow_tactic.
-  some_tactic_that_makes_Defined_slow.
-Defined.
-```
+- [Bug #4187](https://coq.inria.fr/bugs/show_bug.cgi?id=4187) -
+  `admit` is slow on a goal of the form `G' -> Prop` when it's fast on
+  a goal of the form `G'` - see [`slow_admit.v`](./slow_admit.v)
 
-- [Bug #5038](https://coq.inria.fr/bugs/show_bug.cgi?id=5038) -
-  `Definition` does head-zeta-reduction.  See
-  [`slow_lets.v`](./slow_lets.v) for an example of exponential
-  behavior.
+- [Bug #4821](https://coq.inria.fr/bugs/show_bug.cgi?id=4821) -
+  `simple eapply` can take 2 hours - see
+  [`slow_fiat_eapply_example/src/Parsers/Refinement/SharpenedJavaScriptAssignmentExpression.v`](./slow_fiat_eapply_example/src/Parsers/Refinement/SharpenedJavaScriptAssignmentExpression.v)
 
-- [Bug #5096](https://coq.inria.fr/bugs/show_bug.cgi?id=5096) -
-  `vm_compute` is exponentially slower than `native_compute`, `lazy`,
-  and `compute`.  See
-  [`slow_fiat_crypto_vm_compute/README.md`](./slow_fiat_crypto_vm_compute/README.md)
-  for more details and instructions on running.
-
-## Already fixed or partially fixed issues:
+- [Bug #4777](https://coq.inria.fr/bugs/show_bug.cgi?id=4777) - unless
+  `Set Silent` is on, the printing time is impacted by large terms
+  that don't print - see
+  [`interactive_hidden_slowness.v`](./interactive_hidden_slowness.v)
+  ([`interactive_hidden_slowness.sh`](./interactive_hidden_slowness.sh)
+  for Coq 8.5, unless you want to use `coqtop -emacs -time <
+  interactive_hidden_slowness.v`)
 
 - [Bug #4537](https://coq.inria.fr/bugs/show_bug.cgi?id=4537) - Coq
   8.5 is slower (sometimes by as much as 5x-6x) than Coq 8.5beta2 in
@@ -201,3 +167,49 @@ Defined.
 - [Bug #3447](https://coq.inria.fr/bugs/show_bug.cgi?id=3447) - Some
   `Defined`s are 30x slower in trunk - most of the time was spent
   hashconsing universes.
+
+## Issues related to Proof General slowness (not Coq slowness per se):
+
+- [Bug #4669](https://coq.inria.fr/bugs/show_bug.cgi?id=4669) -
+  printing of dependent evars in ProofGeneral can slow emacs
+  interaction to a crawl (because printing of dependent evars in the
+  goal does not respect `Set Printing Width`) - see
+  [`slow_dependent_evars_in_pg.v`](./slow_dependent_evars_in_pg.v), and
+  make sure to let it set `coq-end-goals-regexp-show-subgoals` to
+  `nil` appropriately.
+
+## Issues marked WONTFIX:
+
+  [#4640](https://coq.inria.fr/bugs/show_bug.cgi?id=4640),
+  Has to do with slow [End Section] in special case of no section variables.
+
+## Issues marked MOVED:
+
+- [Bug #4625](https://coq.inria.fr/bugs/show_bug.cgi?id=4625) -
+  checking `Defined`/`Qed` causes coqtop to drop the most recent proof
+  state.  This makes it a pain to debug things like:
+```coq
+Definition foo : bar.
+Proof.
+  some_slow_tactic.
+  some_tactic_that_makes_Defined_slow.
+Defined.
+```
+
+## Issues marked INVALID:
+  
+- Bugs [#4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643),
+  [#4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642), and
+  [#4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779): `Defined.`
+  sometimes takes 2 minutes; `End Section` can take 30 seconds, even
+  though there are no section variables, no tactics, no notations, no
+  `Let`s, and only one or two `Definition`s; `cbv [some identifiers]`
+  can run through 64 GB of RAM in 15 minutes; and `pose y as x; change
+  y with x in H` can be 1300x slower than `set (x := y) in H`;
+  respectively.  See
+  [`slow_fiat_examples/README.md`](./slow_fiat_examples/README.md) for
+  more details and instructions on running.  (Be warned, some of the
+  examples of slowness themselves take 20 minutes to compile.)
+
+
+

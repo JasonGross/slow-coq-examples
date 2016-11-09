@@ -143,12 +143,12 @@ Some examples of Coq being really slow:
   [Bug #4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642) - 
   `cbv [some identifiers]` can run through 64 GB of RAM in 15 minutes
 
-  **Assessment**: ???
+  **Assessment**: NOT DONE
 
   [Bug #4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779) -
   `pose y as x; change y with x in H` can be 1300x slower than `set (x := y) in H`
 
-  **Assessment**: ???
+  **Assessment**: NOT DONE
 
 ## Partially fixed:
 

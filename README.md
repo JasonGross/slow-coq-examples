@@ -89,9 +89,8 @@ Some examples of Coq being really slow:
 - [Bug #4636](https://coq.inria.fr/bugs/show_bug.cgi?id=4636) - `set
   (x := y)` can be 100x slower than `pose y as x; change y with x` -
   see [`slow_set.v`](./slow_set.v).  (The reverse can also happen,
-  where `change` is orders of magnitude slower than `set`.  See
-  [bug #4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779) in the next
-  bullet.)
+  where `change` is orders of magnitude slower than `set`.  See also 
+  [bug #4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779), below.
 
   **Assessment**: we now have SSReflect's search algorithm, but need
   to study whether it's in fact better; a redesign is needed to
@@ -141,12 +140,16 @@ Some examples of Coq being really slow:
   code
 
   [Bug #4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642) - 
-  `cbv [some identifiers]` can run through 64 GB of RAM in 15 minutes
+  `cbv [some identifiers]` can run through 64 GB of RAM in 15 minutes;
+  see slow_fiat_examples/README.md for more details and instructions on running.
+  (Be warned, some of the examples of slowness themselves take 20 minutes to compile.)
 
   **Assessment**: NOT DONE
 
   [Bug #4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779) -
-  `pose y as x; change y with x in H` can be 1300x slower than `set (x := y) in H`
+  `pose y as x; change y with x in H` can be 1300x slower than `set (x := y) in H`;
+  see slow_fiat_examples/README.md for more details and instructions on running.
+  (Be warned, some of the examples of slowness themselves take 20 minutes to compile.)
 
   **Assessment**: NOT DONE
 
@@ -265,8 +268,7 @@ Defined.
 - [Bug #4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643) -
  `Defined.` sometimes takes 2 minutes; see
   [`slow_fiat_examples/README.md`](./slow_fiat_examples/README.md) for
-  more details and instructions on running.  (Be warned, some of the
-  examples of slowness themselves take 20 minutes to compile.)
-
+  more details and instructions on running. (Be warned, some of the examples
+  of slowness themselves take 20 minutes to compile.)
 
 

@@ -89,7 +89,7 @@ Some examples of Coq being really slow:
 - [Bug #4636](https://coq.inria.fr/bugs/show_bug.cgi?id=4636) - `set
   (x := y)` can be 100x slower than `pose y as x; change y with x` -
   see [`slow_set.v`](./slow_set.v).  (The reverse can also happen,
-  where `change` is orders of magnitude slower than `set`.  See also 
+  where `change` is orders of magnitude slower than `set`.  See also
   [bug #4779](https://coq.inria.fr/bugs/show_bug.cgi?id=4779), below.
 
   **Assessment**: we now have SSReflect's search algorithm, but need
@@ -139,7 +139,7 @@ Some examples of Coq being really slow:
   maybe it's not really a bug; or maybe the fix is just to remove the
   code
 
-  [Bug #4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642) - 
+  [Bug #4642](https://coq.inria.fr/bugs/show_bug.cgi?id=4642) -
   `cbv [some identifiers]` can run through 64 GB of RAM in 15 minutes;
   see slow_fiat_examples/README.md for more details and instructions on running.
   (Be warned, some of the examples of slowness themselves take 20 minutes to compile.)
@@ -264,7 +264,7 @@ Defined.
 ```
 
 ## Issues marked INVALID:
-  
+
 - [Bug #4643](https://coq.inria.fr/bugs/show_bug.cgi?id=4643) -
  `Defined.` sometimes takes 2 minutes; see
   [`slow_fiat_examples/README.md`](./slow_fiat_examples/README.md) for
@@ -272,3 +272,7 @@ Defined.
   of slowness themselves take 20 minutes to compile.)
 
 
+## Misc
+
+There are some unminimized examples in [`unminimized/`](./unminimized).
+See the latest commit in each submodule for more details.

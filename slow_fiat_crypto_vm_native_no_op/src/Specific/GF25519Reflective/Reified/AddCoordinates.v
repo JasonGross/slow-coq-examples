@@ -188,7 +188,6 @@ Definition radd_coordinates_input_bounds
 Time Definition radd_coordinatesZ : Expr _ := Eval vm_compute in proj1_sig radd_coordinatesZ_sig.
 Time Definition radd_coordinatesW_pkgo := Eval vm_compute in rexpr_select_word_sizes_option radd_coordinatesZ radd_coordinates_input_bounds.
 Time Definition radd_coordinatesW_pkg := Eval vm_compute in rexpr_select_word_sizes_postprocess1 radd_coordinatesW_pkgo.
-Time Definition radd_coordinatesW_pkg' := Eval vm_compute in radd_coordinatesW_pkg.
 Time Definition radd_coordinatesT := get_output_type radd_coordinatesW_pkg.
 Time Definition radd_coordinatesW' : Expr _ := Eval vm_compute in get_output_expr radd_coordinatesW_pkg.
 Time Definition radd_coordinatesW : Expr radd_coordinatesT := Eval cbv [radd_coordinatesW'] in rexpr_select_word_sizes_postprocess2 radd_coordinatesW'.

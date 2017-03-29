@@ -191,7 +191,3 @@ Time Definition radd_coordinatesW_pkg := Eval vm_compute in rexpr_select_word_si
 Time Definition radd_coordinatesT := get_output_type radd_coordinatesW_pkg.
 Time Definition radd_coordinatesW' : Expr _ := Eval vm_compute in get_output_expr radd_coordinatesW_pkg.
 Time Definition radd_coordinatesW : Expr radd_coordinatesT := Eval cbv [radd_coordinatesW'] in rexpr_select_word_sizes_postprocess2 radd_coordinatesW'.
-
-About radd_coordinatesW_pkg.
-Time Definition radd_coordinatesW_pkg' := Eval vm_compute in radd_coordinatesW_pkg.
-Time Definition radd_coordinatesW_pkg'' := Eval native_compute in radd_coordinatesW_pkg.

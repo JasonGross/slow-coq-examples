@@ -170,7 +170,3 @@ Time Definition rladderstepW_pkg := Eval vm_compute in rexpr_select_word_sizes_p
 Time Definition rladderstepT := get_output_type rladderstepW_pkg.
 Time Definition rladderstepW' : Expr _ := Eval vm_compute in get_output_expr rladderstepW_pkg.
 Time Definition rladderstepW : Expr rladderstepT := Eval cbv [rladderstepW'] in rexpr_select_word_sizes_postprocess2 rladderstepW'.
-
-About rladderstepW_pkg.
-Time Definition rladderstepW_pkg' := Eval vm_compute in rladderstepW_pkg.
-Time Definition rladderstepW_pkg'' := Eval native_compute in rladderstepW_pkg.

@@ -6,10 +6,9 @@ make
 ```
 
 In
-[`src/Specific/GF25519Reflective/Reified/AddCoordinates.v`](./src/Specific/GF25519Reflective/Reified/AddCoordinates.v)
+[`src/Specific/GF25519Reflective/Reified/AddCoordinatesSlowExample.v`](./src/Specific/GF25519Reflective/Reified/AddCoordinatesSlowExample.v)
 and
-[`src/Specific/GF25519Reflective/Reified/LadderStep.v`](./src/Specific/GF25519Reflective/Reified/LadderStep.v),
-there is a `vm_compute` and a `native_compute` on the last two lines
-of each file that take a long time (around 20 seconds), despite there
-not being any computation to do.  The `native_compute` line takes
-significantly longer (a few hundred seconds).
+[`src/Specific/GF25519Reflective/Reified/LadderStepSlowExample.v`](./src/Specific/GF25519Reflective/Reified/LadderStepSlowExample.v),
+there is a `vm_compute` and a `native_compute` in each file that take
+a long time (around 20 seconds for `vm_compute`, a few hundred seconds
+for `native_compute`), despite there not being any computation to do.

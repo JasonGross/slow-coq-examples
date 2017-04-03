@@ -11,9 +11,7 @@
 /slow_fiat_simpl_example/Makefile
 /slow_fiat_eapply_example/_CoqProject
 /slow_fiat_eapply_example/Makefile
-/slow_fiat_crypto_vm_compute/Makefile.coq
-/slow_fiat_crypto_vm_native_no_op/Makefile.coq
-/slow_fiat_crypto_reify/Makefile.coq
+/slow_fiat_crypto_*/Makefile.coq
 .lia.cache
 .nia.cache
 .nlia.cache

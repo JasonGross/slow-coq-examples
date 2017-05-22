@@ -138,8 +138,6 @@ VFILES:=src/Common/UIP.v\
   src/Common/Tactics/DestructHead.v\
   src/Common/Telescope/Instances.v\
   src/Parsers/ContextFreeGrammar/Core.v\
-  src/Common/Tactics/HintDbExtra.v\
-  src/Common/Tactics/TransparentAbstract.v\
   src/Common.v\
   src/Parsers/BaseTypes.v\
   src/Parsers/ContextFreeGrammar/SimpleCorrectness.v\
@@ -194,7 +192,6 @@ VFILES:=src/Common/UIP.v\
   src/Parsers/Reachable/OnlyLast/MinimalReachableOfReachable.v\
   src/Computation/ApplyMonad.v\
   src/Computation/Refinements/General.v\
-  src/Common/Tactics/CacheStringConstant.v\
   src/Common/IterateBoundedIndex.v\
   src/Common/StringBound.v\
   src/Parsers/StringLike/OcamlString.v\

@@ -1,8 +1,5 @@
 -arg "-compat 8.4"
--arg "-require Coq.Compat.Coq84"
--arg "-require Coq.Compat.AdmitAxiom"
 -R src Fiat
--I src/Common/Tactics
 src/Common/UIP.v
 src/Common/Tactics/IsClosed.v
 src/Common/NatFacts.v
@@ -220,4 +217,5 @@ src/Parsers/ParserFromParserADT.v
 src/Parsers/Refinement/ReductionTactics.v
 src/Parsers/Refinement/Tactics.v
 src/Parsers/ExtrOcamlParsers.v
-src/Parsers/Refinement/SharpenedJSON.v
+src/Parsers/Refinement/SharpenedJSONNative.v
+src/Parsers/Refinement/SharpenedJSONVM.v

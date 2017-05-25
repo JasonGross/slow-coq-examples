@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -x
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SRC="$1"
@@ -10,7 +10,9 @@ cd "$DST"
 FILES="$(grep -o '^[^ ]*coqc.*\([^ ]*\.v\)' log | grep -o '[^ ]*$')"
 VFILES="$(echo "$FILES" | grep '\.v$')"
 OTHERFILES="$(echo "$FILES" | grep -v '\.v$')"
+echo "$OTHERFILES"
 FILES="$(echo "$VFILES"; (echo "$OTHERFILES" | sed s'/^\(.*)$/\1.v/g'))"
+echo "$FILES"
 HEADER="$(cat _CoqProject | grep -v '\.\(v\|ml\|ml4\|mllib\|mli\)$')"
 (echo "$HEADER"; echo "$FILES") > _CoqProject
 rm -rf .gitignore .git

@@ -19,9 +19,10 @@ team.
 
 Some examples of Coq being really slow:
 
-- [`vm_native_slower_extraction.v`](./vm_native_slower_extraction.v) -
+- [Bug #8019](https://github.com/coq/coq/issues/8019) -
   `native_compute` is about 14x-16x slower than `ocamlopt` extraction,
-  `vm_compute` is another 2x-3x slower.
+  `vm_compute` is another 2x-3x slower - see
+  [`vm_native_slower_extraction.v`](./vm_native_slower_extraction.v).
 
 - [Bug #5148](https://coq.inria.fr/bugs/show_bug.cgi?id=5148) - Ltac
   reification of moderate sized terms can take over 90 hours - see
